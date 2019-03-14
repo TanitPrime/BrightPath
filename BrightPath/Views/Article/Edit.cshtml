@@ -1,0 +1,59 @@
+﻿@model BrightPath.Models.Article
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ArticleId" />
+            <div class="form-group">
+                <label asp-for="ArticleTitle" class="control-label"></label>
+                <input asp-for="ArticleTitle" class="form-control" />
+                <span asp-validation-for="ArticleTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="desc_mini" class="control-label"></label>
+                <input asp-for="desc_mini" class="form-control" />
+                <span asp-validation-for="desc_mini" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="desc" class="control-label"></label>
+                <input asp-for="desc" class="form-control" />
+                <span asp-validation-for="desc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArticleAdress" class="control-label"></label>
+                <input asp-for="ArticleAdress" class="form-control" />
+                <span asp-validation-for="ArticleAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Articlecoor" class="control-label"></label>
+                <input asp-for="Articlecoor" class="form-control" />
+                <span asp-validation-for="Articlecoor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArticleContact" class="control-label"></label>
+                <input asp-for="ArticleContact" class="form-control" />
+                <span asp-validation-for="ArticleContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

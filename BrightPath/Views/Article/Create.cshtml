@@ -1,0 +1,65 @@
+﻿@model BrightPath.Models.Article
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Article</h4>
+<hr />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ArticleTitle" class="control-label"></label>
+                <input asp-for="ArticleTitle" class="form-control" />
+                <span asp-validation-for="ArticleTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="desc_mini" class="control-label"></label>
+                <input asp-for="desc_mini" class="form-control" />
+                <span asp-validation-for="desc_mini" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="desc" class="control-label"></label>
+                <input asp-for="desc" class="form-control" />
+                <span asp-validation-for="desc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArticleAdress" class="control-label"></label>
+                <input asp-for="ArticleAdress" class="form-control" />
+                <span asp-validation-for="ArticleAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Articlecoor" class="control-label"></label>
+                <input asp-for="Articlecoor" class="form-control" />
+                <span asp-validation-for="Articlecoor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArticleContact" class="control-label"></label>
+                <input asp-for="ArticleContact" class="form-control" />
+                <span asp-validation-for="ArticleContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input type="file" name="Image File" required />
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

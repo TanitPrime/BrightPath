@@ -1,0 +1,110 @@
+﻿@model IEnumerable<BrightPath.Models.Article>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1> Top Picks</h1>
+<hr width="80%"/>
+<div class="side-container">
+    <div class="Create align-content-lg-end">
+        <a asp-action="Create" class="create-button">Create New</a>
+    </div>
+    <div class="check-image-controller" style="margin-top:20px;">
+        <a asp-action="Add" asp-controller="Image" class="create-image">check image controller (test)</a>
+        
+    </div>
+
+</div>
+
+<!--<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.desc_mini)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleAdress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articlecoor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleContact)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.desc_mini)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.desc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleAdress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Articlecoor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleContact)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+    -->
+<br />
+
+<div class="flex-wrap" >
+
+    <div class"article-wrap style="margin-right:150px;" >
+        @foreach (var item in Model)
+        {
+            <a asp-action="Details" asp-route-id="@item.ArticleId" style="text-decoration:none;color:inherit;">
+                <div class="article" style="border-left:20px solid ;margin-top:20px;">
+
+                    <div class="title col-10 bg-light" style="padding:1em;text-align:center;border-radius:5px;">
+                        @Html.DisplayFor(modelItem => item.ArticleTitle)
+                    </div>
+                    <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+                        @Html.DisplayFor(modelItem => item.desc_mini)
+                    </div>
+                    <div class="long_disc col-lg-10" style="padding:1em;min-height:300px;">
+
+                        @Html.DisplayFor(modelItem => item.desc)
+                    </div>
+
+
+
+
+
+                </div>
+            </a>
+        }
+    </div>
+</div>
