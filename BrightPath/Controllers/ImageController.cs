@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using BrightPath.Models;
+﻿using BrightPath.ViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BrightPath.Controllers
 {
@@ -22,36 +16,33 @@ namespace BrightPath.Controllers
         }
 
 
-        [Route("addimage")]
+        //[Route("addimage")]
         [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
 
-        [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(List<IFormFile> files)
+        //[HttpPost("UploadFiles")]
+        public async Task<IActionResult> Post(AddImageViewModel addImageViewModel)
         {
-            long size = files.Sum(f => f.Length);
-
-            // full path to file in temp location
-            var filePath = Path.GetTempFileName();
-
-            foreach (var formFile in files)
+            /// TODO: decide if the path is the one you want
+            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image");
+            foreach (var file in addImageViewModel.Files)
             {
-                if (formFile.Length > 0)
+                if (file.Length > 0)
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //  TODO: change the filename so it doesnt save the original user one, could be malicious or bad idea
+                    var filePath = Path.Combine(uploads, file.FileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        await formFile.CopyToAsync(stream);
+                        await file.CopyToAsync(fileStream);
                     }
                 }
             }
 
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-
-            return Ok(new { count = files.Count, size, filePath });
+            //  TODO: add the file path to the article it belongs to, so  you can retrieve it when the article is clicked/shown
+            return View();
         }
 
     }
