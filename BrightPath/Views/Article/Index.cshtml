@@ -4,10 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-@using (Html.BeginForm("Index", "Article", FormMethod.Get))
-{
-    @Html.TextBox("Searching")<input type="submit" value="Search" />
-}
+
 
 <h1> Top Picks</h1>
 <hr width="80%"/>
@@ -15,10 +12,7 @@
     <div class="Create align-content-lg-end">
         <a asp-action="Create" class="create-button">Create New</a>
     </div>
-    <div class="check-image-controller" style="margin-top:20px;">
-        <a asp-action="Add" asp-controller="Image" class="create-image">check image controller (test)</a>
-        
-    </div>
+    
 
 </div>
 
