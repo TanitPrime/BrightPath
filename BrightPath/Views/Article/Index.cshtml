@@ -4,6 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
+@using (Html.BeginForm("Index", "Article", FormMethod.Get))
+{
+    @Html.TextBox("Searching")<input type="submit" value="Search" />
+}
+
 <h1> Top Picks</h1>
 <hr width="80%"/>
 <div class="side-container">
@@ -81,7 +86,7 @@
 
 <div class="flex-wrap" >
 
-    <div class"article-wrap style="margin-right:150px;" >
+    <div class"article-wrap style="margin-right:150px;border:1px solid;" >
         @foreach (var item in Model)
         {
             <a asp-action="Details" asp-route-id="@item.ArticleId" style="text-decoration:none;color:inherit;">
@@ -94,12 +99,14 @@
 
                         @Html.DisplayFor(modelItem => item.desc_mini)
                     </div>
-                    <div class="long_disc col-lg-10" style="padding:1em;min-height:300px;">
+                    <div class="long_disc col-lg-10" style="padding:1em;min-height:300px;word-wrap: break-word;">
 
                         @Html.DisplayFor(modelItem => item.desc)
                     </div>
-
-
+                    @if (item.ImagePath != null)
+                    {
+                    <img src="~/Image/@Url.Content(item.ImagePath)" width="250" height="250" />
+                    }
 
 
 

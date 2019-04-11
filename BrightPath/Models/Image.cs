@@ -9,7 +9,7 @@ namespace BrightPath.Models
     {
         public int ImageId { get; set; }
 
-        public string Title { get; set; }
+        
 
         //public List<IFormFile> Files { get; set; } = new List<IFormFile>();
 

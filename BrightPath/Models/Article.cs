@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,10 @@ using System.Web;
 namespace BrightPath.Models
 {
     public class Article
-    {   
+    {
+        
+
+
         [Key]
         [DisplayName("Article Id")]
         public int ArticleId { get; set; }
@@ -40,7 +44,6 @@ namespace BrightPath.Models
         [DisplayName("Image Path")]
         public string ImagePath { get; set; }
 
-        [DisplayName("Image Name")]
-        public string ImageName { get; set; }
+        
     }
 }

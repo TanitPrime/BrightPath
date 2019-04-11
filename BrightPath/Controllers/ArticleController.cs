@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrightPath.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using BrightPath.ViewModels;
 
 namespace BrightPath.Controllers
 {
@@ -15,18 +18,25 @@ namespace BrightPath.Controllers
 
 public class ArticleController : Controller
     {
+
+
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+       
         private readonly BrightContext _context;
 
-        public ArticleController(BrightContext context)
+        public ArticleController(BrightContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
+    
 
         // GET: Article
         
-        public async Task<IActionResult> Index()
+        public  ActionResult Index(string searching )
         {
-            return View(await _context.Articles.ToListAsync());
+            return View( _context.Articles.Where(x => x.ArticleTitle.Contains(searching) || searching == null).ToList()); 
         }
 
         // GET: Article/Details/5
@@ -48,6 +58,7 @@ public class ArticleController : Controller
         }
 
         // GET: Article/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -58,31 +69,56 @@ public class ArticleController : Controller
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact")] Article article)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath")] Article article, ViewModelBoth viewModelBoth)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(article);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
+                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image");
+                foreach (var file in viewModelBoth.Files)
+                {
+                    if (file.Length > 0)
+                    {
+                        //  TODO: change the filename so it doesnt save the original user one, could be malicious or bad idea
+
+
+                        string filename = $"{article.ArticleTitle}{DateTime.Now.ToString("ssddmmyyyy")}{Path.GetExtension(file.FileName)}";
+                       // string filename = article.ArticleTitle + Path.GetExtension(file.FileName);
+                       // filename = filename + DateTime.Now.ToString("yymmssfff");
+                        article.ImagePath = filename;
+                        var filePath = Path.Combine(uploads, filename);
+                        
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                            _context.Add(article);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Index));
+                        }
+                    }
+                }
+                
+
+
             }
             return View(article);
         }
 
         // GET: Article/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, ViewModelBoth viewModelBoth)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _context.Articles.FindAsync(id);
-            if (article == null)
+             viewModelBoth.Article = await _context.Articles.FindAsync(id);
+            if (viewModelBoth.Article == null)
             {
                 return NotFound();
             }
-            return View(article);
+            return View(viewModelBoth);
         }
 
         // POST: Article/Edit/5
@@ -90,7 +126,7 @@ public class ArticleController : Controller
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath")] Article article, ViewModelBoth viewModelBoth)
         {
             if (id != article.ArticleId)
             {
@@ -101,7 +137,31 @@ public class ArticleController : Controller
             {
                 try
                 {
-                    _context.Update(article);
+
+                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image");
+                    foreach (var file in viewModelBoth.Files)
+                    {
+                        if (file.Length > 0)
+                        {
+
+
+                            //making file name
+                            string filename = $"{article.ArticleTitle}{DateTime.Now.ToString("ssddmmyyyy")}{Path.GetExtension(file.FileName)}";
+                            //assigning file name
+                           // System.Diagnostics.Debug.WriteLine("3333333333333333333333333333333333333333333333333" + filename);
+                            article.ImagePath = filename;
+                            //sending file in this filepath
+                            var filePath = Path.Combine(uploads, filename);
+
+                            //streaming the file down
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                            }
+
+                        }
+                    }
+                    _context.Update(article); 
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -112,7 +172,7 @@ public class ArticleController : Controller
                     }
                     else
                     {
-                        throw;
+                        throw;  
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -139,6 +199,7 @@ public class ArticleController : Controller
         }
 
         // POST: Article/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
