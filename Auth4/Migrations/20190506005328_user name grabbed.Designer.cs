@@ -4,20 +4,42 @@ using BrightPathDev.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrightPathDev.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190506005328_user name grabbed")]
+    partial class usernamegrabbed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BrightPathDev.Models.Admin", b =>
+                {
+                    b.Property<int>("AdminId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AdminPw")
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsRoot");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("AdminId");
+
+                    b.ToTable("Admins");
+                });
 
             modelBuilder.Entity("BrightPathDev.Models.Article", b =>
                 {
@@ -42,8 +64,6 @@ namespace BrightPathDev.Migrations
 
                     b.Property<string>("AuthorName");
 
-                    b.Property<int>("FlagCount");
-
                     b.Property<string>("ImageName");
 
                     b.Property<string>("ImagePath");
@@ -59,42 +79,29 @@ namespace BrightPathDev.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("BrightPathDev.Models.DeleteList", b =>
+            modelBuilder.Entity("BrightPathDev.Models.User", b =>
                 {
-                    b.Property<int>("DListId")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArticleId");
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("AuthorId");
+                    b.Property<string>("UserLastName")
+                        .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("AuthorName");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("DateOfRequest");
+                    b.Property<string>("UserPw")
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Reason");
+                    b.HasKey("UserId");
 
-                    b.HasKey("DListId");
-
-                    b.ToTable("DeleteLists");
-                });
-
-            modelBuilder.Entity("BrightPathDev.Models.FlagList", b =>
-                {
-                    b.Property<int>("FListId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ArticleId");
-
-                    b.Property<int>("CommentId");
-
-                    b.Property<int>("FlaggerId");
-
-                    b.HasKey("FListId");
-
-                    b.ToTable("FlagLists");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

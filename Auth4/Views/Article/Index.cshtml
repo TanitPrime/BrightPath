@@ -99,7 +99,8 @@
                     </div>
                     @if (item.ImagePath != null)
                     {
-                        <img src="~/Image/@Url.Content(item.ImagePath)" width="250" height="250" />
+                        
+                        <img src="~/Image/@item.AuthorId/@item.ArticleTitle/@Url.Content(item.ImageName)" width="250" height="250" />
                     }
 
 

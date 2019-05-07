@@ -17,9 +17,9 @@ namespace BrightPathDev.Data
        
         public DbSet<Article> Articles { get; set; }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<DeleteList> DeleteLists{ get; set; }
 
-        public DbSet<Admin> Admins { get; set; }
+        public DbSet<FlagList> FlagLists{ get; set; }
 
         public DbSet<Image> Image { get; set; }
 

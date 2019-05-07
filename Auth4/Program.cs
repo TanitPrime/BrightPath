@@ -32,25 +32,38 @@ namespace BrightPathDev
 
                 var adminRole = new IdentityRole("Admin");
 
+                var rootRole = new IdentityRole("Root");
+
 
                 if (!ctx.Roles.Any())
                 {
                     //create a role
-                    roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(rootRole).GetAwaiter().GetResult();
                 }
-                if (!ctx.Users.Any(u => u.UserName == "admin"))
+                if (!ctx.Users.Any(u => u.UserName == "Root"))
                 {
+                    //create a root 
+                    var rootUser = new IdentityUser
+                    {
+                        UserName = "Root",
+                        Email = "root@test.com"
+                    };
+                    var result = userManager.CreateAsync(rootUser, "password").GetAwaiter().GetResult();
+
+                    //add role to user
+                    userManager.AddToRoleAsync(rootUser, rootRole.Name).GetAwaiter().GetResult();
+
                     //create an admin
                     var adminUser = new IdentityUser
                     {
-                        UserName = "admin",
+                        UserName = "Admin",
                         Email = "admin@test.com"
                     };
-                    var result = userManager.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
+
+                    var result2 = userManager.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
 
                     //add role to user
-                    userManager.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
-
+                    userManager.AddToRoleAsync(adminUser, rootRole.Name).GetAwaiter().GetResult();
                 }
             }catch(Exception e) {
                 Console.WriteLine(e.Message);

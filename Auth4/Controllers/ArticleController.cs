@@ -11,6 +11,8 @@ using System.IO;
 using BrightPathDev.ViewModels;
 using BrightPathDev.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace BrightPathDev.Controllers
 {
@@ -21,16 +23,18 @@ namespace BrightPathDev.Controllers
     public class ArticleController : Controller
     {
 
+        private readonly UserManager<IdentityUser> _userManager;
 
         private readonly IHostingEnvironment _hostingEnvironment;
 
 
         private readonly ApplicationDbContext _context;
 
-        public ArticleController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
+        public ArticleController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
+            _userManager = userManager;
         }
 
 
@@ -77,36 +81,56 @@ namespace BrightPathDev.Controllers
         {
             if (ModelState.IsValid)
             {
+                //id stuff
+                
+                var userId = _userManager.GetUserId(HttpContext.User);
+                var userName = _userManager.GetUserName(HttpContext.User);
+                article.AuthorId = userId;
+                article.AuthorName = userName;
 
-                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image");
+                //img upload stuff
+                
+               
+                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId,article.ArticleTitle);
+                    Directory.CreateDirectory(uploads);
+
+                    
+
+
+
                 foreach (var file in viewModelBoth.Files)
                 {
                     if (file.Length > 0)
                     {
                         //  TODO: change the filename so it doesnt save the original user one, could be malicious or bad idea
 
-
+                        //making the img name
                         string filename = $"{article.ArticleTitle}{DateTime.Now.ToString("ssddmmyyyy")}{Path.GetExtension(file.FileName)}";
-                        // string filename = article.ArticleTitle + Path.GetExtension(file.FileName);
-                        // filename = filename + DateTime.Now.ToString("yymmssfff");
-                        article.ImagePath = filename;
+                       
+                        //assigning values
+                        article.ImageName = filename;
+                        article.ImagePath = uploads;
+                        //directing path for file
                         var filePath = Path.Combine(uploads, filename);
-
-
+                       
+                        //streaming file
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             await file.CopyToAsync(fileStream);
                             _context.Add(article);
-                            await _context.SaveChangesAsync();
-                            return RedirectToAction(nameof(Index));
+                            
                         }
                     }
                 }
-
-
-
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             return View(article);
+        }
+
+        private object CreateWebHostBuilder(object args)
+        {
+            throw new NotImplementedException();
         }
 
         // GET: Article/Edit/5
@@ -141,24 +165,28 @@ namespace BrightPathDev.Controllers
 
             if (ModelState.IsValid)
             {
+                
                 try
                 {
+                    var userId = _userManager.GetUserId(HttpContext.User);
+                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, article.ArticleTitle);
 
-                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image");
                     foreach (var file in viewModelBoth.Files)
                     {
                         if (file.Length > 0)
                         {
+                            //  TODO: change the filename so it doesnt save the original user one, could be malicious or bad idea
 
-
-                            //making file name
+                            //making the img name
                             string filename = $"{article.ArticleTitle}{DateTime.Now.ToString("ssddmmyyyy")}{Path.GetExtension(file.FileName)}";
-                            //assigning file name
-                            article.ImagePath = filename;
-                            //sending file in this filepath
+
+                            //assigning values
+                            article.ImageName = filename;
+                            article.ImagePath = uploads;
+                            //directing path for file
                             var filePath = Path.Combine(uploads, filename);
 
-                            //streaming the file down
+                            //streaming file
                             using (var fileStream = new FileStream(filePath, FileMode.Create))
                             {
                                 await file.CopyToAsync(fileStream);
@@ -211,6 +239,13 @@ namespace BrightPathDev.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var article = await _context.Articles.FindAsync(id);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            
+            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, article.ArticleTitle);
+            if (Directory.Exists(uploads))
+            {
+                Directory.Delete(uploads,true);
+            }
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
