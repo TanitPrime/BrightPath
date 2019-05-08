@@ -71,7 +71,7 @@
 
     </dl>
 </div>
-<div>@if (User.Identity.IsAuthenticated || User.Identity.Name=="Admin" ) { 
+<div>@if ((User.Identity.IsAuthenticated && User.Identity.Name == Model.AuthorName) || User.Identity.Name=="Admin" ) { 
     <a asp-action="Edit" asp-route-id="@Model.ArticleId">Edit</a> <br /> <a asp-action="Delete" asp-route-id="@Model.ArticleId">Delete</a><br />
     }
     <a asp-action="Index">Back to List</a>
