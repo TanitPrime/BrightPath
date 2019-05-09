@@ -49,5 +49,17 @@ namespace BrightPathDev.Models
         public string AuthorId { get; set; }
         public string AuthorName { get; set; }
         public int FlagCount { get; set; }
+
+
+
+        public ContactStatus Status { get; set; }
+    }
+
+    public enum ContactStatus
+    {
+        Submitted,
+        Approved,
+        Rejected
     }
 }
+

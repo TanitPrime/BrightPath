@@ -14,7 +14,7 @@ namespace BrightPathDev.Controllers
     public partial class ArticleController : Controller
     {
         // GET: Article/Edit/5
-        [Authorize]
+        
         public async Task<IActionResult> Edit(int? id, ViewModelBoth viewModelBoth)
         {
             if (id == null)
@@ -33,7 +33,7 @@ namespace BrightPathDev.Controllers
         // POST: Article/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath")] Article article, ViewModelBoth viewModelBoth)
@@ -48,8 +48,9 @@ namespace BrightPathDev.Controllers
 
                 try
                 {
-                    var userId = _userManager.GetUserId(HttpContext.User);
-                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, article.ArticleTitle);
+
+                    var x = article.AuthorId;
+                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", x, article.ArticleTitle);
 
                     foreach (var file in viewModelBoth.Files)
                     {

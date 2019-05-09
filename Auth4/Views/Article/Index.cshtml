@@ -97,10 +97,10 @@
 
                         @Html.DisplayFor(modelItem => item.desc)
                     </div>
-                    @if (item.ImagePath != null)
+                    @if (item.ImagePath != null  )
                     {
-                        
-                        <img src="~/Image/@item.AuthorId/@item.ArticleTitle/@Url.Content(item.ImageName)" width="250" height="250" />
+
+                        <img src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" width="250" height="250" />
                     }
 
 

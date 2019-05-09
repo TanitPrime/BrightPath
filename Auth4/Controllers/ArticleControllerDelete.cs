@@ -12,7 +12,7 @@ namespace BrightPathDev.Controllers
     public partial  class ArticleController : Controller
     {
         // GET: Article/Delete/5
-        [Authorize]
+        
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -31,7 +31,7 @@ namespace BrightPathDev.Controllers
         }
 
         // POST: Article/Delete/5
-        [Authorize]
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

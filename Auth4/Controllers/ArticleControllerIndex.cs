@@ -1,4 +1,5 @@
 ﻿using BrightPathDev.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ namespace BrightPathDev.Controllers
 
 
         // GET: Article
-
+        [AllowAnonymous]
         public ActionResult Index(string searching)
         {
             return View(_context.Articles.Where(x => x.ArticleTitle.Contains(searching) || searching == null).ToList());

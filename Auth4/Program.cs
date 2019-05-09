@@ -35,13 +35,13 @@ namespace BrightPathDev
                 var rootRole = new IdentityRole("Root");
 
 
-                if (!ctx.Roles.Any())
-                {
+               // if (!ctx.Roles.Any())
+               // {
                     //create a role
                     roleManager.CreateAsync(rootRole).GetAwaiter().GetResult();
-                }
-                if (!ctx.Users.Any(u => u.UserName == "Root"))
-                {
+               // }
+               // if (!ctx.Users.Any(u => u.UserName == "Root"))
+              //  {
                     //create a root 
                     var rootUser = new IdentityUser
                     {
@@ -64,7 +64,7 @@ namespace BrightPathDev
 
                     //add role to user
                     userManager.AddToRoleAsync(adminUser, rootRole.Name).GetAwaiter().GetResult();
-                }
+              //  }
             }catch(Exception e) {
                 Console.WriteLine(e.Message);
             }

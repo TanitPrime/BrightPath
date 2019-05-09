@@ -13,7 +13,7 @@ namespace BrightPathDev.Controllers
     public partial class ArticleController : Controller
     {
         // GET: Article/Create
-        [Authorize]
+       
         [HttpGet]
         public IActionResult Create()
         {
@@ -23,10 +23,10 @@ namespace BrightPathDev.Controllers
         // POST: Article/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath")] Article article, ViewModelBoth viewModelBoth)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath,AuthorId")] Article article, ViewModelBoth viewModelBoth)
         {
             if (ModelState.IsValid)
             {
@@ -69,13 +69,23 @@ namespace BrightPathDev.Controllers
                             _context.Add(article);
 
                         }
+                        
                     }
                 }
                 await _context.SaveChangesAsync();
+                //renaming directory to a more secure one
+                var id = article.ArticleId.ToString();
+                var SecUploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, id);
+                Directory.Move(uploads, SecUploads);
                 return RedirectToAction(nameof(Index));
+                
             }
             return View(article);
         }
 
+        private string ToString(int articleId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
