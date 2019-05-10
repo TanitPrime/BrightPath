@@ -39,7 +39,7 @@ namespace BrightPathDev.Controllers
             var article = await _context.Articles.FindAsync(id);
             var userId = _userManager.GetUserId(HttpContext.User);
 
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, article.ArticleTitle);
+            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, article.ArticleId.ToString());
             if (Directory.Exists(uploads))
             {
                 Directory.Delete(uploads, true);

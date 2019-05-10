@@ -36,8 +36,9 @@ namespace BrightPathDev.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath")] Article article, ViewModelBoth viewModelBoth)
+        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth)
         {
+            
             if (id != article.ArticleId)
             {
                 return NotFound();
@@ -48,9 +49,22 @@ namespace BrightPathDev.Controllers
 
                 try
                 {
+                    //grab the article straight from db
+                    var articleFromDb = await _context.Articles.FirstOrDefaultAsync(k => k.ArticleId == article.ArticleId);
+                    var authorId = _context.Articles.FirstOrDefault(x => x.ArticleId == article.ArticleId).AuthorId;
+                   
 
-                    var x = article.AuthorId;
-                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", x, article.ArticleTitle);
+                    //assign the articlefromdb properties to what the user edited
+                    articleFromDb.ArticleTitle = article.ArticleTitle;
+                    articleFromDb.ArticleAdress = article.ArticleAdress;
+                    articleFromDb.ArticleContact = article.ArticleContact;
+                    articleFromDb.desc = article.desc;
+                    articleFromDb.desc_mini = article.desc_mini; ;
+                    articleFromDb.Articlecoor = article.Articlecoor ;
+
+
+
+                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", authorId, articleFromDb.ArticleId.ToString());
 
                     foreach (var file in viewModelBoth.Files)
                     {
@@ -62,8 +76,8 @@ namespace BrightPathDev.Controllers
                             string filename = $"{article.ArticleTitle}{DateTime.Now.ToString("ssddmmyyyy")}{Path.GetExtension(file.FileName)}";
 
                             //assigning values
-                            article.ImageName = filename;
-                            article.ImagePath = uploads;
+                            articleFromDb.ImageName = filename;
+                            articleFromDb.ImagePath = uploads;
                             //directing path for file
                             var filePath = Path.Combine(uploads, filename);
 
@@ -75,7 +89,8 @@ namespace BrightPathDev.Controllers
 
                         }
                     }
-                    _context.Update(article);
+                    //put back the articlefromdb back to db
+                    _context.Update(articleFromDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

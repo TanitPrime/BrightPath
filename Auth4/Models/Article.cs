@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,9 +44,10 @@ namespace BrightPathDev.Models
 
         [DisplayName("Image Path")]
         public string ImagePath { get; set; }
+
         [DisplayName("Image Name")]
         public string ImageName { get; set; }
-
+       
         public string AuthorId { get; set; }
         public string AuthorName { get; set; }
         public int FlagCount { get; set; }
