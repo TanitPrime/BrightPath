@@ -47,6 +47,7 @@ namespace BrightPathDev
             services.AddDefaultIdentity<IdentityUser>(
                 option =>
                 {
+                    //password options
                     option.Password.RequireDigit = false;
                     option.Password.RequiredLength = 6;
                     option.Password.RequireNonAlphanumeric = false;
@@ -60,8 +61,7 @@ namespace BrightPathDev
 
             services.AddMvc(config =>
             {
-                // using Microsoft.AspNetCore.Mvc.Authorization;
-                // using Microsoft.AspNetCore.Authorization;
+                //make everyone require to Authorize unless specified 
                 var policy = new AuthorizationPolicyBuilder()
                                  .RequireAuthenticatedUser()
                                  .Build();
@@ -70,7 +70,7 @@ namespace BrightPathDev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -90,13 +90,57 @@ namespace BrightPathDev
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Article}/{action=Index}/{id?}");
             });
+            CreateRoles(serviceProvider).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { "Root", "Admin", "User" };
+            IdentityResult roleResult;
+
+            foreach(var roleName in roleNames)
+            {
+                //check if role exists
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and send to db
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+            
+            //creating root
+            var poweruser = new IdentityUser
+            {
+                UserName = "Root",
+                Email = "root@test.com",
+
+            };
+
+            string powerUserPwd = "password";
+            var _user = await UserManager.FindByEmailAsync("root@test.com");
+
+            if(_user == null)
+            {
+                var createPowerUser = await UserManager.CreateAsync(poweruser, powerUserPwd);
+                if (createPowerUser.Succeeded)
+                {
+                    //tie the poweruser to the role
+                    await UserManager.AddToRoleAsync(poweruser, "Root");
+                }
+            }
+
+
         }
     }
 }
