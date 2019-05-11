@@ -58,6 +58,10 @@ namespace BrightPathDev
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireRootRole", policy => policy.RequireRole("Root"));
+            });
 
             services.AddMvc(config =>
             {
@@ -126,20 +130,36 @@ namespace BrightPathDev
                 Email = "root@test.com",
 
             };
+            //creating admin
+            var adminuser = new IdentityUser
+            {
+                UserName = "Admin",
+                Email = "admint@test.com",
 
-            string powerUserPwd = "password";
+            };
+            string Pwd = "password";
             var _user = await UserManager.FindByEmailAsync("root@test.com");
 
             if(_user == null)
             {
-                var createPowerUser = await UserManager.CreateAsync(poweruser, powerUserPwd);
+                var createPowerUser = await UserManager.CreateAsync(poweruser, Pwd);
                 if (createPowerUser.Succeeded)
                 {
                     //tie the poweruser to the role
                     await UserManager.AddToRoleAsync(poweruser, "Root");
                 }
             }
+             var _auser = await UserManager.FindByEmailAsync("admin@test.com");
 
+            if (_auser == null)
+            {
+                var createAdminUser = await UserManager.CreateAsync(adminuser, Pwd);
+                if (createAdminUser.Succeeded)
+                {
+                    //tie the admin to the role
+                    await UserManager.AddToRoleAsync(adminuser, "Admin");
+                }
+            }
 
         }
     }
