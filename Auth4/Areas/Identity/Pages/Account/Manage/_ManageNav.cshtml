@@ -13,6 +13,7 @@
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
     @if (User.IsInRole("Root"))
     {
-    <li class="nav-item"><a class="nav-link @ManageNavPages.AddAdminNavClass(ViewContext)" id="two-factor" asp-page="./AdminRegister">Add Admin</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.AddAdminNavClass(ViewContext)" id="two-factor" asp-page="./AdminRegister">Add Admin</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.DeleteUserNavClass(ViewContext)" id="two-factor" asp-page="./DeleteUsers">Delete Users</a></li>
     }
 </ul>

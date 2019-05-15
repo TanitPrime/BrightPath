@@ -1,0 +1,42 @@
+﻿@page
+@model DeleteUserModel
+@{
+    ViewData["Title"] = "DeleteUsers";
+    ViewData["ActivePage"] = ManageNavPages.DeleteUser;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                UserName
+            </th>
+        </tr>
+        </thead>
+    <tbody>
+        @foreach(var item in Model.UserList){
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.ID">delete</a>
+            </td>
+        </tr>
+         }
+    </tbody>
+</table>
+
+
+
+
+
+@section Scripts {
+       <partial name="_ValidationScriptsPartial" />
+}
