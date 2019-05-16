@@ -14,8 +14,14 @@ using Microsoft.Extensions.Logging;
 
 namespace BrightPathDev.Areas.Identity.Pages.Account
 {
+    public class User
+    {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+    }
+
     [Authorize(Roles ="Root")]
-    public class DeleteUserModel : Controller
+    public class DeleteUserModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -27,26 +33,38 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            
+            _context = context;
+
         }
+     
+
+        public IList<User> Users = new List<User>();
 
 
 
-        // GET: Article
-        
-        public ActionResult Index(string searching)
+        public void OnGet()
         {
-            var userList = _userManager.Users.ToList();
-            return View(userList);
+            List<IdentityUser> AppUsers = _context.Users.ToList();
+            foreach (IdentityUser U in AppUsers)
+            {
+                User X = new User
+                {
+                    UserId = U.Id,
+                    UserName = U.NormalizedUserName
+                };
+                Users.Add(X);
+            }
         }
 
+      
 
-        
+
     }
 }
