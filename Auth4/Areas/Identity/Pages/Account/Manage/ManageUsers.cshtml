@@ -1,0 +1,59 @@
+﻿@page
+@model ManageUserModel
+@{
+    ViewData["Title"] = "ManageUsers";
+    ViewData["ActivePage"] = ManageNavPages.ManageUser;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Id
+            </th>
+            <th>
+                User Name
+            </th>
+        </tr>
+        </thead>
+    <tbody>
+        @foreach(var item in Model.Users){
+            @if (item.UserName != "ROOT") { 
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                <form asp-action="DeleteConfirmed" asp-route-id="@item.UserId">
+
+                    <button type="submit" class="btn btn-primary">Delete</button>
+
+
+                </form>
+               
+                <button type="submit" asp-page-handler="deleteUser"
+                        asp-route-id="@item.UserId">
+                    delete
+                </button>
+
+
+            </td>
+        </tr>
+        }
+         }
+    </tbody>
+</table>
+
+
+
+
+
+@section Scripts {
+       <partial name="_ValidationScriptsPartial" />
+}

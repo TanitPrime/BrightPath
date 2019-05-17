@@ -17,7 +17,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account.Manage
 
         public static string AddAdmin => "AddAdmin";
 
-        public static string DeleteUser => "DeleteUser";
+        public static string ManageUser => "ManageUser";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -31,7 +31,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account.Manage
 
         public static string AddAdminNavClass(ViewContext viewContext) => PageNavClass(viewContext, AddAdmin);
 
-        public static string DeleteUserNavClass(ViewContext viewContext) => PageNavClass(viewContext, DeleteUser);
+        public static string ManageUserNavClass(ViewContext viewContext) => PageNavClass(viewContext, ManageUser);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {
