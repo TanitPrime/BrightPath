@@ -1,0 +1,20 @@
+﻿@model BrightPathDev.Models.Article
+@{
+    ViewData["Title"] = "Request Denied";
+}
+
+
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+    <h1 color="red">You already submitted a request for this article please wait approval</h1>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

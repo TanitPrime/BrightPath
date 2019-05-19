@@ -44,25 +44,39 @@ namespace Auth4.Controllers
         public async Task<IActionResult> AddToList([Bind("DListId,ArticleId,AuthorId,AuthorName,Reason,DateOfRequest")]DeleteList deleteList,int id, IFormCollection formFields)
         {
 
+            var userId = _userManager.GetUserId(HttpContext.User);
+            
+            //var x = await _userManager.IsInRoleAsync(userId,"Root");
+
             var article = await _context.Articles
                 .FirstOrDefaultAsync(m => m.ArticleId == id);
             if (article == null)
             {
                 return NotFound();
             }
+            //if (userId == article.AuthorId) { }
+
+            var x = await _context.DeleteLists.FirstOrDefaultAsync(m => m.AuthorId == article.AuthorId);
+            
+            if(x == null) { 
             deleteList.AuthorId = article.AuthorId;
             deleteList.ArticleId = article.ArticleId;
             deleteList.AuthorName = article.AuthorName;
             deleteList.DateOfRequest = $"{DateTime.Now.ToString("ssddmmyyyy")}";
             deleteList.Reason = formFields["reason"];
 
-            var poop = "pee";
+         
             _context.Update(deleteList);
             await _context.SaveChangesAsync();
-
+            
 
 
             return LocalRedirect("/");
+            }
+            else
+            {
+                return LocalRedirect("/RequestDenied");
+            }
         }
     }
 }

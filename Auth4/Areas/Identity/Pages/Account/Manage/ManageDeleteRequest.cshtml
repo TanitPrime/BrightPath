@@ -1,0 +1,59 @@
+﻿@page
+@model ManageDeleteRequestModel
+@{
+    ViewData["Title"] = "Manage Delete Request";
+    ViewData["ActivePage"] = ManageNavPages.ManageDeleteRequest;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                User Name
+            </th>
+            <th>
+                Date Of Request
+            </th>
+            
+            <th>
+                Reason
+            </th>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Requests){
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfRequest)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.reason)
+            </td>
+            <td>
+                <a asp-controller="Article" asp-action="Delete" asp-route-id="@item.ArticleId">Approve Delete</a>
+
+                <a asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">View Article</a>
+
+
+            </td>
+        </tr>
+
+       }
+    </tbody>
+</table>
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
