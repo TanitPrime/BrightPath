@@ -16,7 +16,7 @@ namespace BrightPathDev.Models
         public string AuthorId { get; set; }
         public string AuthorName { get; set; }
         public string Reason { get; set; }
-        public DateTime DateOfRequest { get; set; }
+        public string DateOfRequest { get; set; }
 
     }
 }

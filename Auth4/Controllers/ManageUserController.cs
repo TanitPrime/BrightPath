@@ -12,33 +12,25 @@ using Microsoft.Extensions.Logging;
 
 namespace Auth4.Controllers
 {
-    public class DeleteUserController : Controller
+    public class ManageUserController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
 
-        public DeleteUserController(
+        public ManageUserController(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
             ApplicationDbContext context)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
-            _emailSender = emailSender;
             _context = context;
 
         }
-        [Route("Pls")]
+        //delete user
         [Authorize(Roles = "Root")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -73,8 +65,76 @@ namespace Auth4.Controllers
                         transaction.Commit(); //only commit if user and all his logins/roles have been deleted  
                 }
             }
-            return View(user);
+           return LocalRedirect("/Identity/Account/Manage/ManageUsers");
 
         }
+
+
+
+        //add silenced role to user
+        [Authorize(Roles = "Root")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Mute(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            
+
+
+            if (ModelState.IsValid)
+            {
+
+
+
+                var user = await _userManager.FindByIdAsync(id);
+                var logins = await _userManager.GetLoginsAsync(user);
+                var rolesForUser = await _userManager.GetRolesAsync(user);
+
+
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    IdentityResult result = IdentityResult.Success;
+
+                foreach (var login in logins)
+                {
+                    result = await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
+                    if (result != IdentityResult.Success)
+                        break;
+                }
+                if (result == IdentityResult.Success)
+                {
+                    foreach (var item in rolesForUser)
+                    {
+                        result = await _userManager.RemoveFromRoleAsync(user, item);
+                        if (result != IdentityResult.Success)
+                            break;
+                    }
+                }
+                if (result == IdentityResult.Success)
+                {
+                    result = await _userManager.AddToRoleAsync(user, "Muted");
+                    if (result == IdentityResult.Success)
+                        transaction.Commit(); //only commit if user and all his logins/roles have been deleted  
+                }
+
+
+                }
+
+
+
+            }
+
+          
+            return LocalRedirect("/Identity/Account/Manage/ManageUsers");
+
+        }
+
+
+
     }
 }
+
+

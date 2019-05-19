@@ -109,7 +109,7 @@ namespace BrightPathDev
             //initializing custom roles 
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            string[] roleNames = { "Root", "Admin", "User" };
+            string[] roleNames = { "Root", "Admin", "Muted" };
             IdentityResult roleResult;
 
             foreach(var roleName in roleNames)

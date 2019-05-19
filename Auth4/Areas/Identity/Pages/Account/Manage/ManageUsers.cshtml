@@ -17,6 +17,9 @@
             <th>
                 User Name
             </th>
+            @*<th>
+                User Role
+            </th>*@
         </tr>
         </thead>
     <tbody>
@@ -29,24 +32,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.UserRole)
+            </td>*@
             <td>
-                <form asp-action="DeleteConfirmed" asp-route-id="@item.UserId">
+                <form asp-route-id="@item.UserId">
 
-                    <button type="submit" class="btn btn-primary">Delete</button>
 
+
+                    <button type="submit" class="btn btn-primary" asp-controller="ManageUser" asp-action="Delete"
+                            asp-route-id="@item.UserId">
+                        delete
+                    </button>
+                    <button type="submit" class="btn btn-primary" asp-controller="ManageUser" asp-action="Mute"
+                            asp-route-id="@item.UserId">
+                        Mute
+                    </button>
 
                 </form>
-               
-                <button type="submit" asp-page-handler="deleteUser"
-                        asp-route-id="@item.UserId">
-                    delete
-                </button>
+
+
 
 
             </td>
         </tr>
         }
-         }
+       }
     </tbody>
 </table>
 

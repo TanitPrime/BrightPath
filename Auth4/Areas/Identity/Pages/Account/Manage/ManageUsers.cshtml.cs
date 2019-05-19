@@ -20,6 +20,8 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
     {
         public string UserId { get; set; }
         public string UserName { get; set; }
+
+        public string UserRole { get; set; }
     }
 
     [Authorize(Roles ="Root")]
@@ -50,62 +52,32 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
         public IList<User> Users = new List<User>();
 
 
-
-        public void OnGet()
+        
+        public async Task OnGetAsync()
         {
             List<IdentityUser> AppUsers = _context.Users.ToList();
             foreach (IdentityUser U in AppUsers)
             {
+               
                 User X = new User
                 {
                     UserId = U.Id,
-                    UserName = U.NormalizedUserName
+                    UserName = U.NormalizedUserName,
+                    
                 };
+                var thisuser = await _userManager.FindByIdAsync(X.UserId);
+                var IdentityRolelist =await _userManager.GetRolesAsync(thisuser);
+                
+                IdentityUser au = _context.Users.First(u => u.Id == X.UserId);
+
+                
+                //AspNetUser selectedUser = dbContext.AspNetUsers.FirstOrDefault(u => u.UserId == X.UserId);
                 Users.Add(X);
             }
         }
 
         
         
-        public async Task<IActionResult> DeleteUser(string id)
-        {
-           ;
-            if (id == null) 
-            {
-                return NotFound();
-            }
-            var user = await _userManager.FindByIdAsync(id);
-            var logins = await _userManager.GetLoginsAsync(user);
-            var rolesForUser = await _userManager.GetRolesAsync(user);
-
-            using (var transaction = _context.Database.BeginTransaction())
-            {
-                IdentityResult result = IdentityResult.Success;
-                foreach (var login in logins)
-                {
-                    result = await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
-                    if (result != IdentityResult.Success)
-                        break;
-                }
-                if (result == IdentityResult.Success)
-                {
-                    foreach (var item in rolesForUser)
-                    {
-                        result = await _userManager.RemoveFromRoleAsync(user, item);
-                        if (result != IdentityResult.Success)
-                            break;
-                    }
-                }
-                if (result == IdentityResult.Success)
-                {
-                    result = await _userManager.DeleteAsync(user);
-                    if (result == IdentityResult.Success)
-                        transaction.Commit(); //only commit if user and all his logins/roles have been deleted  
-                }
-            }
-            return Page();
-            
-        }
 
     }
 }

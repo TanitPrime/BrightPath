@@ -1,0 +1,45 @@
+﻿@model BrightPathDev.Models.Article
+@{
+    ViewData["Title"] = "Delete Request";
+}
+
+<h1>Edit</h1>
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <dl>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ArticleId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ArticleId)
+            </dd>
+        </dl>
+        <form  method="post" class="form-horizontal" role="form" asp-controller="Review" asp-action="AddToList" asp-route-id="@Model.ArticleId">
+            <div class="form-group">
+                <label class="control-label">
+                    Reason here nigga
+                </label>
+                <textarea class="form-control" id="reason" name="reason" >
+
+                     @ViewData["reason"]
+
+                </textarea>
+
+            </div>
+
+            <button type="submit">Submit</button>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
