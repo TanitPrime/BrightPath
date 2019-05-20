@@ -38,6 +38,7 @@ namespace BrightPathDev.Controllers
         {
             var article = await _context.Articles.FindAsync(id);
             var userId = _userManager.GetUserId(HttpContext.User);
+            var deleteList = await _context.DeleteLists.FindAsync(id);
 
             var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, article.ArticleId.ToString());
             if (Directory.Exists(uploads))
@@ -45,6 +46,7 @@ namespace BrightPathDev.Controllers
                 Directory.Delete(uploads, true);
             }
             _context.Articles.Remove(article);
+            _context.DeleteLists.Remove(deleteList);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

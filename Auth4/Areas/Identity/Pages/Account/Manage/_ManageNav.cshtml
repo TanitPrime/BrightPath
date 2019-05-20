@@ -15,6 +15,11 @@
     {
         <li class="nav-item"><a class="nav-link @ManageNavPages.AddAdminNavClass(ViewContext)" id="Add-Admin" asp-page="./AdminRegister">Add Admin</a></li>
         <li class="nav-item"><a class="nav-link @ManageNavPages.ManageUserNavClass(ViewContext)" id="Manage-User" asp-page="./ManageUsers">Manage Users</a></li>
+        
+    }
+    @if(User.IsInRole("Root") || User.IsInRole("Admin"))
+    {
         <li class="nav-item"><a class="nav-link @ManageNavPages.ManageDeleteRequestNavClass(ViewContext)" id="Manage-Delete-Request" asp-page="./ManageDeleteRequest">Manage Delete Requests</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.ApprovalsNavClass(ViewContext)" id="Approvals" asp-page="./Approvals">Manage Creations</a></li>
     }
 </ul>

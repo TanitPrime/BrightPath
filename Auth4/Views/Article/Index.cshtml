@@ -83,30 +83,33 @@
     <div class"article-wrap style="margin-right:150px;border:1px solid;">
         @foreach (var item in Model)
         {
-            <a asp-action="Details" asp-route-id="@item.ArticleId" style="text-decoration:none;color:inherit;">
-                <div class="article" style="border-left:20px solid ;margin-top:20px;">
+            @if (item.Status == ContactStatus.Approved)
+            {
+                <a asp-action="Details" asp-route-id="@item.ArticleId" style="text-decoration:none;color:inherit;">
+                    <div class="article" style="border-left:20px solid ;margin-top:20px;">
 
-                    <div class="title col-10 bg-light" style="padding:1em;text-align:center;border-radius:5px;">
-                        @Html.DisplayFor(modelItem => item.ArticleTitle)
+                        <div class="title col-10 bg-light" style="padding:1em;text-align:center;border-radius:5px;">
+                            @Html.DisplayFor(modelItem => item.ArticleTitle)
+                        </div>
+                        <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+                            @Html.DisplayFor(modelItem => item.desc_mini)
+                        </div>
+                        <div class="long_disc col-lg-10" style="padding:1em;min-height:300px;word-wrap: break-word;">
+
+                            @Html.DisplayFor(modelItem => item.desc)
+                        </div>
+                        @if (item.ImagePath != null)
+                        {
+
+                            <img src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" width="250" height="250" />
+                        }
+
+
+
                     </div>
-                    <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
-
-                        @Html.DisplayFor(modelItem => item.desc_mini)
-                    </div>
-                    <div class="long_disc col-lg-10" style="padding:1em;min-height:300px;word-wrap: break-word;">
-
-                        @Html.DisplayFor(modelItem => item.desc)
-                    </div>
-                    @if (item.ImagePath != null  )
-                    {
-
-                        <img src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" width="250" height="250" />
-                    }
-
-
-
-                </div>
-            </a>
+                </a>
+            }
         }
     </div>
 </div>

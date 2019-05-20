@@ -59,7 +59,7 @@ namespace BrightPathDev.Models
 
     public enum ContactStatus
     {
-        Submitted,
+        Pending,
         Approved,
         Rejected
     }

@@ -36,7 +36,7 @@ namespace BrightPathDev.Controllers
                 var userName = _userManager.GetUserName(HttpContext.User);
                 article.AuthorId = userId;
                 article.AuthorName = userName;
-
+                article.Status = ContactStatus.Pending;
                 //img upload stuff
 
 
