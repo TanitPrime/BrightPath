@@ -44,20 +44,18 @@ namespace Auth4.Controllers
         public async Task<IActionResult> AddToList([Bind("DListId,ArticleId,AuthorId,AuthorName,Reason,DateOfRequest")]DeleteList deleteList,int id, IFormCollection formFields)
         {
 
-            var userId = _userManager.GetUserId(HttpContext.User);
             
-            //var x = await _userManager.IsInRoleAsync(userId,"Root");
-
+            //find the article by id
             var article = await _context.Articles
                 .FirstOrDefaultAsync(m => m.ArticleId == id);
             if (article == null)
             {
                 return NotFound();
             }
-            //if (userId == article.AuthorId) { }
-
-            var x = await _context.DeleteLists.FirstOrDefaultAsync(m => m.AuthorId == article.AuthorId);
             
+            //grab the delete list from db where Author.Id == Author.Id
+            var x = await _context.DeleteLists.FirstOrDefaultAsync(m => m.AuthorId == article.AuthorId);
+            //inserting values into the deletelist
             if(x == null) { 
             deleteList.AuthorId = article.AuthorId;
             deleteList.ArticleId = article.ArticleId;
@@ -65,7 +63,7 @@ namespace Auth4.Controllers
             deleteList.DateOfRequest = $"{DateTime.Now.ToString("ssddmmyyyy")}";
             deleteList.Reason = formFields["reason"];
 
-         
+            //updating
             _context.Update(deleteList);
             await _context.SaveChangesAsync();
             
@@ -78,5 +76,40 @@ namespace Auth4.Controllers
                 return LocalRedirect("/RequestDenied");
             }
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Approve(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            //find the article by id
+            var article = await _context.Articles
+                .FirstOrDefaultAsync(m => m.ArticleId == id);
+            if (article == null)
+            {
+                return NotFound();
+            }
+            
+            
+            //approve it
+            article.Status = ContactStatus.Approved;
+            
+
+
+            _context.Update(article);
+            await _context.SaveChangesAsync();
+
+            return LocalRedirect("/");
+
+
+
+        }
+        
+
     }
 }

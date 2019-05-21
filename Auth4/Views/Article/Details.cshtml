@@ -79,7 +79,7 @@
 </div>
 @if(User.Identity.IsAuthenticated && User.Identity.Name == Model.AuthorName) { <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.ArticleId">Request Delete</a>}
 <div>@if (User.Identity.Name == Model.AuthorName || User.IsInRole("Root") || User.IsInRole("Admin")) {
-    <a asp-action="Edit" asp-route-id="@Model.ArticleId">Edit</a> <br /> <a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.ArticleId">Approve Delete</a><br />
+    <a asp-action="Edit" asp-route-id="@Model.ArticleId">Edit</a> <br /> 
     }
 @if (!User.IsInRole("Muted")) { 
     <a asp-action="Index">Back to List</a>}

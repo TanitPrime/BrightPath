@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.reason)
             </td>
             <td>
-                <a asp-controller="Article" asp-action="Delete" asp-route-id="@item.ArticleId">Approve Delete</a>
+                <a class="btn btn-primary" asp-controller="Article" asp-action="Delete" asp-route-id="@item.ArticleId">Approve Delete</a>
 
-                <a asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">View Article</a>
+                <a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">View Article</a>
 
 
             </td>

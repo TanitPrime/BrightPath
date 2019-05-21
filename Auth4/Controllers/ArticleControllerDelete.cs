@@ -45,8 +45,17 @@ namespace BrightPathDev.Controllers
             {
                 Directory.Delete(uploads, true);
             }
+            if (article == null )
+            {
+                _context.DeleteLists.Remove(deleteList);
+                if (deleteList == null)
+                {
+                    return NotFound();
+                }
+                
+            }
             _context.Articles.Remove(article);
-            _context.DeleteLists.Remove(deleteList);
+           
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
