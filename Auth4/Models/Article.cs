@@ -61,7 +61,7 @@ namespace BrightPathDev.Models
     {
         Pending,
         Approved,
-        Rejected
+        Edited
     }
 }
 

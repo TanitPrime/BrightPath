@@ -48,7 +48,11 @@
                 <input asp-for="Files" type="file" accept=".jpg,.jpeg,.png" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                @if (User.IsInRole("Root") || User.IsInRole("Admin"))
+                {
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                }
+                
             </div>
         </form>
     </div>

@@ -77,10 +77,17 @@
 
     </dl>
 </div>
-@if(User.Identity.IsAuthenticated && User.Identity.Name == Model.AuthorName) { <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.ArticleId">Request Delete</a>}
-<div>@if (User.Identity.Name == Model.AuthorName || User.IsInRole("Root") || User.IsInRole("Admin")) {
-    <a asp-action="Edit" asp-route-id="@Model.ArticleId">Edit</a> <br /> 
+@if (User.Identity.IsAuthenticated && User.Identity.Name == Model.AuthorName)
+{
+    <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.ArticleId">Request Delete</a><br />
+    <a asp-controller="Review" asp-action="EditRequest" asp-route-id="@Model.ArticleId">Request Edit</a>
+}
+<div>
+    @if (User.IsInRole("Root") || User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.ArticleId">Edit</a> <br />
+        <a asp-action="Delete" asp-route-id="@Model.ArticleId">Delete</a> <br />
     }
-@if (!User.IsInRole("Muted")) { 
-    <a asp-action="Index">Back to List</a>}
+
+    <a asp-action="Index">Back to List</a>
 </div>

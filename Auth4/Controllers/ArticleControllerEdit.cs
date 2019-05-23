@@ -61,7 +61,7 @@ namespace BrightPathDev.Controllers
                     articleFromDb.desc = article.desc;
                     articleFromDb.desc_mini = article.desc_mini; ;
                     articleFromDb.Articlecoor = article.Articlecoor ;
-
+                    articleFromDb.Status = ContactStatus.Approved;
 
 
                     var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", authorId, articleFromDb.ArticleId.ToString());
