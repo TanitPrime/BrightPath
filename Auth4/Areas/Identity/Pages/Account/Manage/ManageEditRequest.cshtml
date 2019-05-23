@@ -1,0 +1,54 @@
+﻿@page
+@model ManageEditRequest
+@{
+    ViewData["Title"] = "manage Edit Requests";
+    ViewData["ActivePage"] = ManageNavPages.ManageEditRequest;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<div class"article-wrap style="margin-right:150px;">
+    @foreach (var item in Model.editRequests)
+    {
+
+        @if (item.ViewModelBoth.Article.Status == Models.ContactStatus.Edited)
+        {
+            <div class="article" style="border-left:20px solid ;margin-top:20px;">
+
+                <div class="title col-10 bg-light" style="padding:1em;text-align:center;border-radius:5px;">
+                    @Html.DisplayFor(modelItem => item.ViewModelBoth.Article.AuthorName)
+                </div>
+                
+                <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+                    @Html.DisplayFor(modelItem => item.ViewModelBoth.Article.ArticleId)
+                </div>
+                <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+                    @Html.DisplayFor(modelItem => item.ViewModelBoth.Article.Status)
+                </div>
+                <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+                         @Html.DisplayFor(modelItem => item.OriginalId)
+                </div>
+
+            </div>
+            <a class="btn btn-primary" style="color:aliceblue;" asp-controller="Article" asp-action="Details" asp-route-id="@item.ViewModelBoth.Article.ArticleId">View Edited ARticle</a><br />
+            <a class="btn btn-primary" style="color:aliceblue;" asp-controller="Article" asp-action="Details" asp-route-id="@item.OriginalId">View Original ARticle</a>
+
+            <form method="post" class="form-horizontal" role="form" asp-controller="Review" asp-action="ApproveEdit" asp-route-id="@item.ViewModelBoth.Article.ArticleId">
+                <button type="submit" class="btn btn-primary" style="color:aliceblue;">Approve</button>
+            </form>
+            <a class="btn btn-primary" style="color:aliceblue;" asp-controller="Article" asp-action="Delete" asp-route-id="@item.ViewModelBoth.Article.ArticleId">Reject</a>
+        }
+    }
+</div>
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

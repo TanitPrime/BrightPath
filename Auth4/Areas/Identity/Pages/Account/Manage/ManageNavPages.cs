@@ -23,6 +23,8 @@ namespace BrightPathDev.Areas.Identity.Pages.Account.Manage
 
         public static string Approvals => "Approvals";
 
+        public static string ManageEditRequest => "ManageEditRequest";
+
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
@@ -40,6 +42,8 @@ namespace BrightPathDev.Areas.Identity.Pages.Account.Manage
         public static string ManageDeleteRequestNavClass(ViewContext viewContext) => PageNavClass(viewContext, ManageDeleteRequest);
 
         public static string ApprovalsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Approvals);
+
+        public static string ManageEditRequestNavClass(ViewContext viewContext) => PageNavClass(viewContext, ManageEditRequest);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

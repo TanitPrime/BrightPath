@@ -55,7 +55,8 @@ namespace BrightPathDev.Controllers
                 
             }
             _context.Articles.Remove(article);
-           
+            
+            _context.DeleteLists.Remove(deleteList);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

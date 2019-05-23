@@ -146,7 +146,7 @@ namespace Auth4.Controllers
                 //img upload stuff
 
 
-                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, editList.ViewModelBoth.Article.ArticleTitle);
+                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, "Edited");
                 Directory.CreateDirectory(uploads);
 
 
@@ -180,9 +180,9 @@ namespace Auth4.Controllers
                 }
                 await _context.SaveChangesAsync();
                 //renaming directory to a more secure one
-                var id = editList.ViewModelBoth.Article.ArticleId.ToString();
-                var SecUploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, id);
-                Directory.Move(uploads, SecUploads);
+                //var newid = editList.ViewModelBoth.Article.ArticleId.ToString();
+                //var SecUploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", userId, newid);
+                //Directory.Move(uploads, SecUploads);
                 
 
             
@@ -191,7 +191,7 @@ namespace Auth4.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApproveEdit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth)
+        public async Task<IActionResult> ApproveEdit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, EditList editList)
         {
 
             if (id != article.ArticleId)
@@ -221,7 +221,7 @@ namespace Auth4.Controllers
 
                     var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", authorId, articleFromDb.ArticleId.ToString());
 
-                    foreach (var file in viewModelBoth.Files)
+                    foreach (var file in editList.ViewModelBoth.Files)
                     {
                         if (file.Length > 0)
                         {
@@ -247,6 +247,9 @@ namespace Auth4.Controllers
                     //put back the articlefromdb back to db
                     _context.Update(articleFromDb);
                     await _context.SaveChangesAsync();
+                    var newid = editList.ViewModelBoth.Article.ArticleId.ToString();
+                    var SecUploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", editList.ViewModelBoth.Article.AuthorId, newid);
+                    Directory.Move(uploads, SecUploads);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

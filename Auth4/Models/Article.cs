@@ -52,7 +52,7 @@ namespace BrightPathDev.Models
         public string AuthorName { get; set; }
         public int FlagCount { get; set; }
 
-
+        public int LikeCount { get; set; }
 
         public ContactStatus Status { get; set; }
     }

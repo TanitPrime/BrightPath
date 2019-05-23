@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BrightPathDev.Data;
 using BrightPathDev.Models;
+using BrightPathDev.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -18,19 +19,17 @@ using Microsoft.Extensions.Logging;
 namespace BrightPathDev.Areas.Identity.Pages.Account
 {
 
-    public class Request
+    public class EditRequest
     {
         public string UserName { get; set; }
-        public string DateOfRequest { get; set; }
-
-        public string reason { get; set; }
-
+        public string DateOfRequest { get; set; } 
         public int ArticleId { get; set; }
+        public int OriginalId { get; set; }
+        public ContactStatus Status { get; set; }
 
-        public int DListId { get; set; }
     }
     [Authorize(Roles ="Root,Admin")]
-    public class ManageDeleteRequestModel : PageModel
+    public class ManageEditRequest : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -38,7 +37,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
 
-        public ManageDeleteRequestModel(
+        public ManageEditRequest(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
@@ -53,26 +52,27 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
 
         }
 
-
         
-        public IList<Request> Requests = new List<Request>();
 
-        public async Task OnGetAsync()
+        public IList<EditList> editRequests = new List<EditList>();
+       
+        public ActionResult  OnGetAsync(EditList editList)
         {
-            var requests = _context.DeleteLists.ToList();
-            foreach(var u in requests)
-            {
-                Request X = new Request
-                {
-                    UserName = u.AuthorName,
-                    DateOfRequest = u.DateOfRequest,
-                    reason = u.Reason,
-                    ArticleId = u.ArticleId,
-                    DListId = u.DListId
-                };
-                Requests.Add(X);
-            }
+            
 
+            //var editrq = _context.Articles.ToList();
+            foreach(var u in editRequests)
+            {
+                EditList X = new EditList
+                {
+                    ViewModelBoth = editList.ViewModelBoth,
+                    
+                    OriginalId = editList.OriginalId                     
+                };
+                 editRequests.Add(X);
+            }
+            
+            return Page();
 
 
         }
