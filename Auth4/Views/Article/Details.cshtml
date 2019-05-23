@@ -60,6 +60,30 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AuthorId)
         </dd>
+        <dd class="col-sm-6">
+            <div id="google-maps"> </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA90TINkNOQX2-7jXdPEVrzi1-FjpKh8kA"></script>
+            <script>
+				$(window).on('load', function () {
+					'use strict';
+					var uluru = {
+						// Use online tool latlong.net to lookup latitude/longitude of a place.
+						lat: 53.40426175, // Latitude
+						lng: -2.9949975, // Longitude
+					};
+					var map = new google.maps.Map(document.getElementById('google-maps'), {
+						zoom: 15, // Zoom Level
+						center: uluru,
+						scrollwheel: false, // enbale/disable scrollwheel.
+					});
+					var marker = new google.maps.Marker({
+						position: uluru,
+						map: map,
+					});
+				});
+            </script>
+        </dd>
 
         @if (Model.ImageName != null)
         {
