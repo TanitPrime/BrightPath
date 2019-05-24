@@ -32,9 +32,12 @@ namespace BrightPathDev.Models
         [Column(TypeName = "nvarchar(100)")]
         [DisplayName("Article Adress")]
         public string ArticleAdress { get; set; }
-        [DisplayName("Article Map Coordination")]
+        [DisplayName("Article Map Latitude")]
         [Column(TypeName = "nvarchar(150)")]
-        public string Articlecoor { get; set; }
+        public float ArticleLat { get; set; }
+        [DisplayName("Article Map Langitiude")]
+        [Column(TypeName = "nvarchar(150)")]
+        public float ArticleLng{ get; set; }
         [DisplayName("Article Contact")]
         [Column(TypeName = "nvarchar(100)")]
         public string ArticleContact { get; set; }

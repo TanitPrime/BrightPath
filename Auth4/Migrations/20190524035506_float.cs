@@ -2,7 +2,7 @@
 
 namespace BrightPathDev.Migrations
 {
-    public partial class xxd : Migration
+    public partial class @float : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

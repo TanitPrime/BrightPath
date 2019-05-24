@@ -37,10 +37,11 @@
             @Html.DisplayFor(model => model.ArticleAdress)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Articlecoor)
+            @Html.DisplayNameFor(model => model.ArticleLat) @Html.DisplayNameFor(model => model.ArticleLng)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Articlecoor)
+            @Html.DisplayFor(model => model.ArticleLat) 
+            @Html.DisplayFor(model => model.ArticleLng)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ArticleContact)
@@ -59,7 +60,8 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AuthorId)
-        </dd><br />
+        </dd>
+        @if(Model.ArticleLat!=null || Model.ArticleLng!=null) { 
         <dd class="col-sm-6">
             <div id="google-maps" style="height:400px;"></div>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -69,8 +71,8 @@
 					'use strict';
 					var uluru = {
 						// Use online tool latlong.net to lookup latitude/longitude of a place.
-						lat: 53.40426175, // Latitude
-						lng: -2.9949975, // Longitude
+						lat: @Model.ArticleLat, // Latitude
+						lng: @Model.ArticleLng, // Longitude
 					};
 					var map = new google.maps.Map(document.getElementById('google-maps'), {
 						zoom: 15, // Zoom Level
@@ -84,7 +86,7 @@
 				});
             </script>
         </dd>
-
+        }
         @if (Model.ImageName != null)
         {
             <dt class="col-sm-2">

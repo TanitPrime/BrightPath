@@ -10,36 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrightPathDev.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190503155252_autor id")]
-    partial class autorid
+    [Migration("20190524031232_all")]
+    partial class all
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("BrightPathDev.Models.Admin", b =>
-                {
-                    b.Property<int>("AdminId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AdminPw")
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<bool>("IsRoot");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("AdminId");
-
-                    b.ToTable("Admins");
-                });
 
             modelBuilder.Entity("BrightPathDev.Models.Article", b =>
                 {
@@ -53,16 +33,33 @@ namespace BrightPathDev.Migrations
                     b.Property<string>("ArticleContact")
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("ArticleLat")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 64)))
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("ArticleLng")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 64)))
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<string>("ArticleTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("Articlecoor")
-                        .HasColumnType("nvarchar(150)");
-
                     b.Property<string>("AuthorId");
 
+                    b.Property<string>("AuthorName");
+
+                    b.Property<int>("FlagCount");
+
+                    b.Property<string>("ImageName");
+
                     b.Property<string>("ImagePath");
+
+                    b.Property<int>("LikeCount");
+
+                    b.Property<int>("Status");
 
                     b.Property<string>("desc")
                         .HasColumnType("nvarchar(750)");
@@ -75,29 +72,42 @@ namespace BrightPathDev.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("BrightPathDev.Models.User", b =>
+            modelBuilder.Entity("BrightPathDev.Models.DeleteList", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("DListId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<int>("ArticleId");
 
-                    b.Property<string>("UserLastName")
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<string>("AuthorId");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<string>("AuthorName");
 
-                    b.Property<string>("UserPw")
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("DateOfRequest");
 
-                    b.HasKey("UserId");
+                    b.Property<string>("Reason");
 
-                    b.ToTable("User");
+                    b.HasKey("DListId");
+
+                    b.ToTable("DeleteLists");
+                });
+
+            modelBuilder.Entity("BrightPathDev.Models.FlagList", b =>
+                {
+                    b.Property<int>("FListId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int>("CommentId");
+
+                    b.Property<int>("FlaggerId");
+
+                    b.HasKey("FListId");
+
+                    b.ToTable("FlagLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

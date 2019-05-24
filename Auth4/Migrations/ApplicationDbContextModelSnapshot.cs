@@ -31,11 +31,18 @@ namespace BrightPathDev.Migrations
                     b.Property<string>("ArticleContact")
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ArticleTitle")
+                    b.Property<string>("ArticleLat")
                         .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 64)))
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("Articlecoor")
+                    b.Property<string>("ArticleLng")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 64)))
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("ArticleTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("AuthorId");

@@ -215,7 +215,8 @@ namespace Auth4.Controllers
                     articleFromDb.ArticleContact = article.ArticleContact;
                     articleFromDb.desc = article.desc;
                     articleFromDb.desc_mini = article.desc_mini; ;
-                    articleFromDb.Articlecoor = article.Articlecoor;
+                    articleFromDb.ArticleLat = article.ArticleLat;
+                    articleFromDb.ArticleLng = article.ArticleLng;
                     articleFromDb.Status = ContactStatus.Approved;
 
 

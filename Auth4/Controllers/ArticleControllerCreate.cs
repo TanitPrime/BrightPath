@@ -26,7 +26,7 @@ namespace BrightPathDev.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,ArticleLat,ArticleLng,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace BrightPathDev.Controllers
                 return RedirectToAction(nameof(Index));
                 
             }
-            return View(article);
+            return View(viewModelBoth);
         }
 
         private string ToString(int articleId)
