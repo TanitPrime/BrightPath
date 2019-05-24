@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BrightPathDev.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,21 +15,22 @@ namespace BrightPathDev.Controllers
 
         // GET: Article/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id,LikeViewModel likeViewModel)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
-            if (article == null)
+            likeViewModel.Article = await _context.Articles.FindAsync(id);
+            var likes = _context.LikeModels.ToList();
+            likeViewModel.LikeModels = likes;
+            if (likeViewModel.Article == null)
             {
                 return NotFound();
             }
 
-            return View(article);
+            return View(likeViewModel);
         }
     }
 }

@@ -22,6 +22,8 @@ namespace BrightPathDev.Data
         public DbSet<FlagList> FlagLists{ get; set; }
 
         public DbSet<Image> Image { get; set; }
+        public DbSet<LikeModel> LikeModels { get; set; }
         public object Request { get; internal set; }
+        public object LikeModel { get; internal set; }
     }
 }

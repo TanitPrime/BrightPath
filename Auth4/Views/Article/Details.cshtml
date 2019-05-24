@@ -1,4 +1,4 @@
-﻿@model BrightPathDev.Models.Article
+﻿@model BrightPathDev.ViewModels.LikeViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,57 +11,57 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ArticleTitle)
+            @Html.DisplayNameFor(model => model.Article.ArticleTitle)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ArticleTitle)
+            @Html.DisplayFor(model => model.Article.ArticleTitle)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.desc_mini)
+            @Html.DisplayNameFor(model => model.Article.desc_mini)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.desc_mini)
+            @Html.DisplayFor(model => model.Article.desc_mini)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.desc)
+            @Html.DisplayNameFor(model => model.Article.desc)
         </dt>
         <dd class="col-sm-10">
             <p style="width:80%;word-wrap: break-word;">
-                @Html.DisplayFor(model => model.desc)
+                @Html.DisplayFor(model => model.Article.desc)
             </p>
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ArticleAdress)
+            @Html.DisplayNameFor(model => model.Article.ArticleAdress)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ArticleAdress)
+            @Html.DisplayFor(model => model.Article.ArticleAdress)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ArticleLat) @Html.DisplayNameFor(model => model.ArticleLng)
+            @Html.DisplayNameFor(model => model.Article.ArticleLat) @Html.DisplayNameFor(model => model.Article.ArticleLng)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ArticleLat) 
-            @Html.DisplayFor(model => model.ArticleLng)
+            @Html.DisplayFor(model => model.Article.ArticleLat)
+            @Html.DisplayFor(model => model.Article.ArticleLng)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ArticleContact)
+            @Html.DisplayNameFor(model => model.Article.ArticleContact)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ArticleContact)
+            @Html.DisplayFor(model => model.Article.ArticleContact)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AuthorName)
+            @Html.DisplayNameFor(model => model.Article.AuthorName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AuthorName)
+            @Html.DisplayFor(model => model.Article.AuthorName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AuthorId)
+            @Html.DisplayNameFor(model => model.Article.AuthorId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AuthorId)
+            @Html.DisplayFor(model => model.Article.AuthorId)
         </dd>
-        @if(Model.ArticleLat!=null || Model.ArticleLng!=null) { 
+
         <dd class="col-sm-6">
             <div id="google-maps" style="height:400px;"></div>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -71,8 +71,8 @@
 					'use strict';
 					var uluru = {
 						// Use online tool latlong.net to lookup latitude/longitude of a place.
-						lat: @Model.ArticleLat, // Latitude
-						lng: @Model.ArticleLng, // Longitude
+						lat: @Model.Article.ArticleLat, // Latitude
+						lng: @Model.Article.ArticleLng, // Longitude
 					};
 					var map = new google.maps.Map(document.getElementById('google-maps'), {
 						zoom: 15, // Zoom Level
@@ -86,33 +86,62 @@
 				});
             </script>
         </dd>
-        }
-        @if (Model.ImageName != null)
+
+
+        @if (Model.Article.ImageName != null)
         {
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ImagePath)
+                @Html.DisplayNameFor(model => model.Article.ImagePath)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ImagePath)
+                @Html.DisplayFor(model => model.Article.ImagePath)
             </dd>
             <dd class="col-sm-10">
 
-                <img src="~/Image/@Model.AuthorId/@Model.ArticleId/@Url.Content(Model.ImageName)" width="250" height="250" />
+                <img src="~/Image/@Model.Article.AuthorId/@Model.Article.ArticleId/@Url.Content(Model.Article.ImageName)" width="250" height="250" />
             </dd>
         }
 
     </dl>
+    <!--Checking if the current logged in user have liked the post before-->
+    @{ bool x = false;
+        foreach (var like in Model.LikeModels)
+        {
+            if (User.Identity.Name == like.UserName)
+            {
+                
+                x = true;
+            }
+
+        }
+        if (x)
+        {
+            <span>Liked</span>
+            <span>@Html.DisplayFor(model => model.Article.LikeCount)Likes!</span>
+
+
+        }
+        else
+        {
+            <form method="post" role="form">
+                <button type="submit" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
+            </form>
+            <span>@Html.DisplayFor(model => model.Article.LikeCount)Likes!</span>
+            
+        }
+    }
+
 </div>
-@if (User.Identity.IsAuthenticated && User.Identity.Name == Model.AuthorName)
+@if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Article.AuthorName)
 {
-    <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.ArticleId">Request Delete</a><br />
-    <a asp-controller="Review" asp-action="EditRequest" asp-route-id="@Model.ArticleId">Request Edit</a>
+    <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.Article.ArticleId">Request Delete</a><br />
+    <a asp-controller="Review" asp-action="EditRequest" asp-route-id="@Model.Article.ArticleId">Request Edit</a>
 }
 <div>
     @if (User.IsInRole("Root") || User.IsInRole("Admin"))
     {
-        <a asp-action="Edit" asp-route-id="@Model.ArticleId">Edit</a> <br />
-        <a asp-action="Delete" asp-route-id="@Model.ArticleId">Delete</a> <br />
+        <a asp-action="Edit" asp-route-id="@Model.Article.ArticleId">Edit</a> <br />
+        <a asp-action="Delete" asp-route-id="@Model.Article.ArticleId">Delete</a> <br />
     }
 
     <a asp-action="Index">Back to List</a>
