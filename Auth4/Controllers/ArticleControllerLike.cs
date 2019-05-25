@@ -12,10 +12,10 @@ namespace BrightPathDev.Controllers
 {
     public partial class ArticleController : Controller
     {
-        
+        //like
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Like(int? id,LikeViewModel likeViewModel)
+        public async Task<IActionResult> Like(int? id)
         {
 
             var userName = _userManager.GetUserName(HttpContext.User);
@@ -36,6 +36,32 @@ namespace BrightPathDev.Controllers
             }
             return LocalRedirect(url);
            
+        }
+
+        //unlike
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UnLike(int? id)
+        {
+
+            var userName = _userManager.GetUserName(HttpContext.User);
+            var likeModel = await _context.LikeModels.FirstOrDefaultAsync(k => k.UserName == userName);
+            var article = await _context.Articles.FirstOrDefaultAsync(k => k.ArticleId == id);
+            
+            var url = "/Article/Details/" + id;
+            if (likeModel != null)
+            {
+                article.LikeCount -= 1;
+                
+                _context.Remove(likeModel);
+                _context.Update(article);
+                await _context.SaveChangesAsync();
+
+                return LocalRedirect(url);
+
+            }
+            return LocalRedirect(url);
+
         }
     }
 }

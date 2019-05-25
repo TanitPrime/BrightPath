@@ -116,7 +116,9 @@
         }
         if (x)
         {
-            <span>Liked</span>
+        <form method="post" role="form">
+            <button type="submit" class="btn btn-outline-primary" asp-controller="Article" asp-action="UnLike" asp-route-id="@Model.Article.ArticleId">Unlike</button>
+        </form>
             <span>@Html.DisplayFor(model => model.Article.LikeCount)Likes!</span>
 
 
@@ -124,7 +126,7 @@
         else
         {
             <form method="post" role="form">
-                <button type="submit" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
+                <button type="submit" class="btn btn-primary" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
             </form>
             <span>@Html.DisplayFor(model => model.Article.LikeCount)Likes!</span>
             
