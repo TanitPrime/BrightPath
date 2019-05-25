@@ -56,6 +56,7 @@ namespace BrightPathDev.Models
         public int FlagCount { get; set; }
 
         public int LikeCount { get; set; }
+        public int DislikeCount { get; set; }
 
         public ContactStatus Status { get; set; }
     }

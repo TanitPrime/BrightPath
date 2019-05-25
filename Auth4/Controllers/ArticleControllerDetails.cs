@@ -24,7 +24,9 @@ namespace BrightPathDev.Controllers
 
             likeViewModel.Article = await _context.Articles.FindAsync(id);
             var likes = _context.LikeModels.ToList();
+            var dislikes = _context.DislikeModels.ToList();
             likeViewModel.LikeModels = likes;
+            likeViewModel.DislikeModels = dislikes;
             if (likeViewModel.Article == null)
             {
                 return NotFound();

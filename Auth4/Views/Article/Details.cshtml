@@ -109,17 +109,17 @@
         {
             if (User.Identity.Name == like.UserName)
             {
-                
+
                 x = true;
             }
 
         }
         if (x)
         {
-        <form method="post" role="form">
-            <button type="submit" class="btn btn-outline-primary" asp-controller="Article" asp-action="UnLike" asp-route-id="@Model.Article.ArticleId">Unlike</button>
-        </form>
-            <span>@Html.DisplayFor(model => model.Article.LikeCount)Likes!</span>
+            <form method="post" role="form">
+                <button type="submit" class="btn btn-outline-primary" asp-controller="Article" asp-action="UnLike" asp-route-id="@Model.Article.ArticleId">Like</button>
+            </form>
+
 
 
         }
@@ -128,10 +128,40 @@
             <form method="post" role="form">
                 <button type="submit" class="btn btn-primary" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
             </form>
-            <span>@Html.DisplayFor(model => model.Article.LikeCount)Likes!</span>
-            
+
+
         }
     }
+    @{ bool y = false;
+        foreach (var dislike in Model.DislikeModels)
+        {
+            if (User.Identity.Name == dislike.UserName)
+            {
+
+                y = true;
+            }
+
+        }
+        if (y)
+        {
+            <form method="post" role="form">
+                <button type="submit" class="btn btn-outline-danger" asp-controller="Article" asp-action="UnDislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
+            </form>
+            
+
+
+
+        }
+        else
+        {
+            <form method="post" role="form">
+                <button type="submit" class="btn btn-danger" asp-controller="Article" asp-action="Dislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
+            </form>
+
+
+        }
+    }
+    <span>@Html.DisplayFor(model => model.Article.LikeCount) Likes!</span>| <span>@Html.DisplayFor(model => model.Article.DislikeCount) Dislikes!</span>
 
 </div>
 @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Article.AuthorName)
