@@ -19,13 +19,17 @@ namespace BrightPathDev.Data
 
         public DbSet<DeleteList> DeleteLists{ get; set; }
 
-        public DbSet<FlagList> FlagLists{ get; set; }
+        public DbSet<Flag> Flags{ get; set; }
 
         public DbSet<Image> Image { get; set; }
         public DbSet<LikeModel> LikeModels { get; set; }
         public DbSet<DislikeModel> DislikeModels { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public object Flag { get; internal set; }
         public object Request { get; internal set; }
         public object LikeModel { get; internal set; }
         public object DislikeModel { get; internal set; }
+
+        public object Comment { get; set; }
     }
 }

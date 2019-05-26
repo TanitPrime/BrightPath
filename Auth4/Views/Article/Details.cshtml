@@ -1,4 +1,4 @@
-﻿@model BrightPathDev.ViewModels.LikeViewModel
+﻿@model BrightPathDev.ViewModels.ArticleViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Article</h4>
+
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -98,83 +98,101 @@
             </dd>
             <dd class="col-sm-10">
 
-                <img src="~/Image/@Model.Article.AuthorId/@Model.Article.ArticleId/@Url.Content(Model.Article.ImageName)" width="250" height="250" />
+                <img src="~/Image/@Model.Article.AuthorId/@Model.Article.ArticleId/@Url.Content(Model.Article.ImageName)" class="img-fluid" />
             </dd>
         }
 
     </dl>
     <!--Checking if the current logged in user have liked the post before-->
-    @{ bool x = false;
-        foreach (var like in Model.LikeModels)
-        {
-            if (User.Identity.Name == like.UserName)
+    <form method="post" role="form">
+        @{ bool x = false;
+            foreach (var like in Model.LikeModels)
             {
+                if (User.Identity.Name == like.UserName)
+                {
 
-                x = true;
+                    x = true;
+                }
             }
-
-        }
-        if (x)
-        {
-            <form method="post" role="form">
+            if (x)
+            {
                 <button type="submit" class="btn btn-outline-primary" asp-controller="Article" asp-action="UnLike" asp-route-id="@Model.Article.ArticleId">Like</button>
-            </form>
-
-
-
-        }
-        else
-        {
-            <form method="post" role="form">
-                <button type="submit" class="btn btn-primary" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
-            </form>
-
-
-        }
-    }
-    @{ bool y = false;
-        foreach (var dislike in Model.DislikeModels)
-        {
-            if (User.Identity.Name == dislike.UserName)
+            }
+            else
             {
+                <button type="submit" class="btn btn-primary" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
+            }
+        }
+        @{ bool y = false;
+            foreach (var dislike in Model.DislikeModels)
+            {
+                if (User.Identity.Name == dislike.UserName)
+                {
 
-                y = true;
+                    y = true;
+                }
+            }
+            if (y)
+            {
+                <button type="submit" class="btn btn-outline-danger" asp-controller="Article" asp-action="UnDislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-danger" asp-controller="Article" asp-action="Dislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
+            }
+        }
+        <br />
+        <span>@Html.DisplayFor(model => model.Article.LikeCount) Likes!</span>| <span>@Html.DisplayFor(model => model.Article.DislikeCount) Dislikes!</span>
+        <br />
+
+        @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Article.AuthorName)
+        {
+            <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.Article.ArticleId">Request Delete</a><br />
+            <a asp-controller="Review" asp-action="EditRequest" asp-route-id="@Model.Article.ArticleId">Request Edit</a>
+        }
+        <div>
+            @if (User.IsInRole("Root") || User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Article.ArticleId">Edit</a> <br />
+                <a asp-action="Delete" asp-route-id="@Model.Article.ArticleId">Delete</a> <br />
             }
 
-        }
-        if (y)
-        {
-            <form method="post" role="form">
-                <button type="submit" class="btn btn-outline-danger" asp-controller="Article" asp-action="UnDislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
-            </form>
-            
+
+        </div
+        <!--Comment Section-->
+        <div>
+            <h4>Comments</h4>
+            <hr />
+            <dl class="row">
+                @foreach (var item in Model.Comments)
+                {
+                    <dt class="col-sm-2">
+                        @item.UserName
+                    </dt>
+                    <dd class="col-sm-10">
+                        @item.CommentText
 
 
+                        @if (User.IsInRole("Root") || User.IsInRole("Admin") || User.Identity.Name == item.UserName)
+                        {
+                            <button class="btn btn-link" type="submit" asp-controller="Article" asp-action="DeleteComment" asp-route-commenter="@item.CommentId" asp-route-id="@Model.Article.ArticleId">Delete</button>
+                        }
+                        <hr />
+                    </dd>
+                }
+            </dl>
+            <dl>
+                <dt>
+                    <label class="control-label">Add Your Own Comment !</label>
+                </dt>
+                <dd>
+                    <textarea style="width:400px;min-height:75px;" type="text" name="CommentText"></textarea>
+                </dd>
+            </dl>
+            <button class="btn btn-primary" type="submit" asp-controller="Article" asp-action="Comment" asp-route-id="@Model.Article.ArticleId">Comment</button>
 
-        }
-        else
-        {
-            <form method="post" role="form">
-                <button type="submit" class="btn btn-danger" asp-controller="Article" asp-action="Dislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
-            </form>
 
-
-        }
-    }
-    <span>@Html.DisplayFor(model => model.Article.LikeCount) Likes!</span>| <span>@Html.DisplayFor(model => model.Article.DislikeCount) Dislikes!</span>
-
-</div>
-@if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Article.AuthorName)
-{
-    <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.Article.ArticleId">Request Delete</a><br />
-    <a asp-controller="Review" asp-action="EditRequest" asp-route-id="@Model.Article.ArticleId">Request Edit</a>
-}
-<div>
-    @if (User.IsInRole("Root") || User.IsInRole("Admin"))
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Article.ArticleId">Edit</a> <br />
-        <a asp-action="Delete" asp-route-id="@Model.Article.ArticleId">Delete</a> <br />
-    }
-
+        </div>
+    </form>
     <a asp-action="Index">Back to List</a>
 </div>

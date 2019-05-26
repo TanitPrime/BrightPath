@@ -15,24 +15,26 @@ namespace BrightPathDev.Controllers
 
         // GET: Article/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id,LikeViewModel likeViewModel)
+        public async Task<IActionResult> Details(int? id,ArticleViewModel articleViewModel)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            likeViewModel.Article = await _context.Articles.FindAsync(id);
+            articleViewModel.Article = await _context.Articles.FindAsync(id);
             var likes = _context.LikeModels.ToList();
             var dislikes = _context.DislikeModels.ToList();
-            likeViewModel.LikeModels = likes;
-            likeViewModel.DislikeModels = dislikes;
-            if (likeViewModel.Article == null)
+            var comments = _context.Comments.ToList();
+            articleViewModel.LikeModels = likes;
+            articleViewModel.DislikeModels = dislikes;
+            articleViewModel.Comments = comments;
+            if (articleViewModel.Article == null)
             {
                 return NotFound();
             }
 
-            return View(likeViewModel);
+            return View(articleViewModel);
         }
     }
 }

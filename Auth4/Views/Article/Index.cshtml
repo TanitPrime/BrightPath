@@ -107,11 +107,12 @@
                         @if (item.ImagePath != null)
                         {
 
-                            <img src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" width="250" height="250" />
+                            <img class="img-fluid" src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" width="250" height="250" />
                         }
+                    <div>
+                        @item.LikeCount Likes ! |@item.DislikeCount Dislikes !
 
-
-
+                    </div>
                     </div>
                 </a>
             }

@@ -4,14 +4,16 @@ using BrightPathDev.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrightPathDev.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190526123514_comments")]
+    partial class comments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,8 +82,7 @@ namespace BrightPathDev.Migrations
 
                     b.Property<int>("ArticleId");
 
-                    b.Property<string>("CommentText")
-                        .IsRequired();
+                    b.Property<string>("CommentText");
 
                     b.Property<string>("UserId");
 
@@ -128,9 +129,9 @@ namespace BrightPathDev.Migrations
                     b.ToTable("DislikeModels");
                 });
 
-            modelBuilder.Entity("BrightPathDev.Models.Flag", b =>
+            modelBuilder.Entity("BrightPathDev.Models.FlagList", b =>
                 {
-                    b.Property<int>("FlagId")
+                    b.Property<int>("FListId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -140,11 +141,9 @@ namespace BrightPathDev.Migrations
 
                     b.Property<int>("FlaggerId");
 
-                    b.Property<int>("FlaggerName");
+                    b.HasKey("FListId");
 
-                    b.HasKey("FlagId");
-
-                    b.ToTable("Flags");
+                    b.ToTable("FlagLists");
                 });
 
             modelBuilder.Entity("BrightPathDev.Models.LikeModel", b =>

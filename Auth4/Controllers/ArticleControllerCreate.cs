@@ -37,6 +37,8 @@ namespace BrightPathDev.Controllers
                 article.AuthorId = userId;
                 article.AuthorName = userName;
                 article.Status = ContactStatus.Pending;
+                article.LikeCount = 0;
+                article.DislikeCount = 0;
                 //img upload stuff
 
 
