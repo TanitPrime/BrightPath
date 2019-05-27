@@ -17,18 +17,22 @@ namespace BrightPathDev.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comment(int? id, IFormCollection formFields)
         {
+            //declaring
             var userName = _userManager.GetUserName(HttpContext.User);
-            
+            var userId = _userManager.GetUserId(HttpContext.User);
             var article = await _context.Articles.FirstOrDefaultAsync(k => k.ArticleId == id);
             var comment = new Comment();
             var url = "/Article/Details/" + id;
-           
-                comment.ArticleId = article.ArticleId;
-                comment.UserName = userName;
-                comment.CommentText = formFields["CommentText"];
-                
-                await _context.AddAsync(comment);
-                _context.SaveChanges();
+           //assigning values
+            comment.ArticleId = article.ArticleId;
+            comment.UserName = userName;
+            comment.CommentText = formFields["CommentText"];
+            comment.FlagCount = 0;
+            comment.UserId = userId;
+
+            //saving
+            await _context.AddAsync(comment);
+            _context.SaveChanges();
                 
             
             return LocalRedirect(url);

@@ -1,0 +1,55 @@
+﻿@page
+@model ManageFlagsModel
+@{
+    ViewData["Title"] = "Manage Flags";
+    ViewData["ActivePage"] = ManageNavPages.ManageFlags;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                User Name
+            </th>
+           
+            <th>
+                About
+            </th>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.FGs){
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlaggerName)
+            </td>
+
+            @if(item.CommentId!=null)
+            {
+                 <td>
+                     @Html.DisplayFor(modelItem => item.CommentId)<a class="btn btn-primary" asp-controller="Article" asp-action="DeleteComment" asp-route-id="@item.ArticleId">Delete Comment</a>
+                </td>
+            }else if(item.ArticleId!=null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleId) <a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">Check Article</a>
+               </td>
+            }
+           
+        </tr>
+
+       }
+    </tbody>
+</table>
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

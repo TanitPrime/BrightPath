@@ -4,18 +4,16 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+    <h1>@Html.DisplayFor(model => model.Article.ArticleTitle)</h1>
 
 <div>
 
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Article.ArticleTitle)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Article.ArticleTitle)
-        </dd>
+        </dt>*@
+        
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Article.desc_mini)
         </dt>
@@ -36,20 +34,21 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Article.ArticleAdress)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Article.ArticleLat) @Html.DisplayNameFor(model => model.Article.ArticleLng)
+        @*<dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Article.ArticleLat)
+            @Html.DisplayNameFor(model => model.Article.ArticleLng)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Article.ArticleLat)
             @Html.DisplayFor(model => model.Article.ArticleLng)
-        </dd>
+        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Article.ArticleContact)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Article.ArticleContact)
         </dd>
-        <dt class="col-sm-2">
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Article.AuthorName)
         </dt>
         <dd class="col-sm-10">
@@ -60,7 +59,7 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Article.AuthorId)
-        </dd>
+        </dd>*@
 
         <dd class="col-sm-6">
             <div id="google-maps" style="height:400px;"></div>
@@ -90,12 +89,12 @@
 
         @if (Model.Article.ImageName != null)
         {
-            <dt class="col-sm-2">
+            @*<dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Article.ImagePath)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Article.ImagePath)
-            </dd>
+            </dd>*@
             <dd class="col-sm-10">
 
                 <img src="~/Image/@Model.Article.AuthorId/@Model.Article.ArticleId/@Url.Content(Model.Article.ImageName)" class="img-fluid" />
@@ -142,6 +141,7 @@
             }
         }
         <br />
+        <!--Displaying the amount of likes/dislikes-->
         <span>@Html.DisplayFor(model => model.Article.LikeCount) Likes!</span>| <span>@Html.DisplayFor(model => model.Article.DislikeCount) Dislikes!</span>
         <br />
 
@@ -156,9 +156,9 @@
                 <a asp-action="Edit" asp-route-id="@Model.Article.ArticleId">Edit</a> <br />
                 <a asp-action="Delete" asp-route-id="@Model.Article.ArticleId">Delete</a> <br />
             }
-
-
-        </div
+         <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="Flag" asp-route-AId="@Model.Article.ArticleId">Report</button>
+         <span>x @Model.Article.FlagCount</span>
+        </div>
         <!--Comment Section-->
         <div>
             <h4>Comments</h4>
@@ -177,13 +177,15 @@
                         {
                             <button class="btn btn-link" type="submit" asp-controller="Article" asp-action="DeleteComment" asp-route-commenter="@item.CommentId" asp-route-id="@Model.Article.ArticleId">Delete</button>
                         }
+                        <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="Flag" asp-route-CId="@item.CommentId" asp-route-AId="@Model.Article.ArticleId">Report</button>
+                        <span>x @item.FlagCount</span>
                         <hr />
                     </dd>
                 }
             </dl>
             <dl>
                 <dt>
-                    <label class="control-label">Add Your Own Comment !</label>
+                    <label class="control-label">Add Your Own Comment !</label> 
                 </dt>
                 <dd>
                     <textarea style="width:400px;min-height:75px;" type="text" name="CommentText"></textarea>

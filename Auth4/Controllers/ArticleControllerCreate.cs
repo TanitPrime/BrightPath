@@ -39,6 +39,7 @@ namespace BrightPathDev.Controllers
                 article.Status = ContactStatus.Pending;
                 article.LikeCount = 0;
                 article.DislikeCount = 0;
+                article.FlagCount = 0;
                 //img upload stuff
 
 

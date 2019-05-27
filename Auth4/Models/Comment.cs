@@ -17,6 +17,7 @@ namespace BrightPathDev.Models
 
         public int ArticleId { get; set; }
 
-       
+        public int FlagCount { get; set; }
+
     }
 }
