@@ -31,7 +31,7 @@
             @if(item.CommentId!=null)
             {
                  <td>
-                     @Html.DisplayFor(modelItem => item.CommentId)<a class="btn btn-primary" asp-controller="Article" asp-action="DeleteComment" asp-route-id="@item.ArticleId">Delete Comment</a>
+                     @Html.DisplayFor(modelItem => item.CommentText)<a class="btn btn-primary" asp-controller="Article" asp-action="DeleteComment" asp-route-id="@item.ArticleId">Delete Comment</a>
                 </td>
             }else if(item.ArticleId!=null)
             {

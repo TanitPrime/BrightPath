@@ -45,10 +45,18 @@ namespace BrightPathDev.Controllers
         {
             var userName = _userManager.GetUserName(HttpContext.User);
             var comment = await _context.Comments.FirstOrDefaultAsync(k => k.CommentId == commenter);
+            var flags = await _context.Flags.ToListAsync();
             var url = "/Article/Details/" + id;
             if (comment != null)
             {
                  _context.Remove(comment);
+                foreach(var item in flags)
+                {
+                    if(item.CommentId == commenter)
+                    {
+                        _context.Remove(comment);
+                    }
+                }
                 await _context.SaveChangesAsync();
                 return LocalRedirect(url);
             }

@@ -24,6 +24,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
         public int? ArticleId { get; set; }
 
         public int? CommentId { get; set; }
+        public string CommentText { get; set; }
 
 
     }
@@ -57,7 +58,8 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
                 {
                     FlaggerName = u.FlaggerName,
                     ArticleId = u.ArticleId,
-                    CommentId = u.CommentId
+                    CommentId = u.CommentId,
+                    CommentText = u.CommentText
                 };
                 FGs.Add(X);
             }

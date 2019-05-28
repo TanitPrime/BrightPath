@@ -156,7 +156,7 @@
                 <a asp-action="Edit" asp-route-id="@Model.Article.ArticleId">Edit</a> <br />
                 <a asp-action="Delete" asp-route-id="@Model.Article.ArticleId">Delete</a> <br />
             }
-         <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="Flag" asp-route-AId="@Model.Article.ArticleId">Report</button>
+         <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="FlagArticle" asp-route-AId="@Model.Article.ArticleId">Report</button>
          <span>x @Model.Article.FlagCount</span>
         </div>
         <!--Comment Section-->
@@ -166,6 +166,7 @@
             <dl class="row">
                 @foreach (var item in Model.Comments)
                 {
+                    @if (item.ArticleId == Model.Article.ArticleId) { 
                     <dt class="col-sm-2">
                         @item.UserName
                     </dt>
@@ -177,10 +178,11 @@
                         {
                             <button class="btn btn-link" type="submit" asp-controller="Article" asp-action="DeleteComment" asp-route-commenter="@item.CommentId" asp-route-id="@Model.Article.ArticleId">Delete</button>
                         }
-                        <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="Flag" asp-route-CId="@item.CommentId" asp-route-AId="@Model.Article.ArticleId">Report</button>
+                        <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="FlagComment" asp-route-CId="@item.CommentId" asp-route-AId="@Model.Article.ArticleId">Report</button>
                         <span>x @item.FlagCount</span>
                         <hr />
                     </dd>
+                    }
                 }
             </dl>
             <dl>
