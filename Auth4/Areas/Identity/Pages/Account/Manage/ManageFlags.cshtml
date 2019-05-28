@@ -9,6 +9,7 @@
 
 
 <table class="table">
+    
     <thead>
         <tr>
 
@@ -26,12 +27,12 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FlaggerName)
-            </td>
+            </td>       
 
             @if(item.CommentId!=null)
             {
                  <td>
-                     @Html.DisplayFor(modelItem => item.CommentText)<a class="btn btn-primary" asp-controller="Article" asp-action="DeleteComment" asp-route-id="@item.ArticleId">Delete Comment</a>
+                     @Html.DisplayFor(modelItem => item.CommentText)<a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">Check Article</a>
                 </td>
             }else if(item.ArticleId!=null)
             {

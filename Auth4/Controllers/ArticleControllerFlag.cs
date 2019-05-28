@@ -28,7 +28,7 @@ namespace BrightPathDev.Controllers
             foreach (var item in flagsfromdb)
             {
                 x = false;
-                if (item.ArticleId == AId && item.FlaggerId == userId)
+                if (item.ArticleId == AId && item.FlaggerId == userId && item.CommentId==null)
                 {
                     x = true;
                 }
@@ -76,6 +76,7 @@ namespace BrightPathDev.Controllers
             }
             if (x == false)
             {
+                flag.ArticleId = AId;
                 flag.CommentId = CId;
                 flag.FlaggerId = userId;
                 flag.FlaggerName = userName;
