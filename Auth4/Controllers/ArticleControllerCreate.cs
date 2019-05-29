@@ -1,6 +1,7 @@
 ﻿using BrightPathDev.Models;
 using BrightPathDev.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace BrightPathDev.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,ArticleLat,ArticleLng,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,ArticleLat,ArticleLng,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth, IFormCollection formFields)
         {
             if (ModelState.IsValid)
             {
@@ -40,6 +41,16 @@ namespace BrightPathDev.Controllers
                 article.LikeCount = 0;
                 article.DislikeCount = 0;
                 article.FlagCount = 0;
+                var w = formFields["Category"];
+                switch (w)
+                    {
+                    case "1":article.Category = "Business";
+                        break;
+                    case "2":article.Category = "Entertainment";
+                        break;
+                    case "3":article.Category = "Health";
+                        break;
+                    }
                 //img upload stuff
 
 

@@ -1,4 +1,5 @@
 ﻿using BrightPathDev.Data;
+using BrightPathDev.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -27,13 +28,85 @@ namespace BrightPathDev.Controllers
         }
 
 
+        // GET: Article search
+        [AllowAnonymous]
+        public ActionResult Search(string searching)
+        {
+            return View("Index", _context.Articles.Where(x => x.ArticleTitle.Contains(searching) || searching == null).ToList());
+        }
         // GET: Article
         [AllowAnonymous]
-        public ActionResult Index(string searching)
+        public ActionResult Index()
         {
-            return View(_context.Articles.Where(x => x.ArticleTitle.Contains(searching) || searching == null).ToList());
-        }
+            var articlelist = _context.Articles.ToList();
+            var list = new List<Article>();
+            var mostB = 0;
+            var mostBid = 0;
+            var mostE = 0;
+            var mostEid = 0;
+            var mostH = 0;
+            var mostHid = 0;
+            foreach (var item in articlelist)
+            {
+                if (item.Category=="Business")
+                {
+                    if (item.LikeCount > mostB)
+                    {
+                        mostB = item.LikeCount;
+                        mostBid = item.ArticleId;
+                    }
+                    
+                }
+                if (item.Category == "Entertainment")
+                {
+                    if (item.LikeCount > mostE)
+                    {
+                        mostE = item.LikeCount;
+                        mostEid = item.ArticleId;
+                    }
 
+                }
+                if (item.Category == "Health")
+                {
+                    if (item.LikeCount > mostH)
+                    {
+                        mostH = item.LikeCount;
+                        mostHid = item.ArticleId;
+                    }
+
+                }
+            }
+            if (mostBid != 0)
+            {
+                list.Add(articlelist.First(item => item.ArticleId == mostBid));
+            }
+            if (mostEid != 0)
+            {
+                list.Add(articlelist.First(item => item.ArticleId == mostEid));
+            }
+            if (mostHid != 0)
+            {
+                list.Add(articlelist.First(item => item.ArticleId == mostHid));
+            }
+
+
+            if (mostB==0 || mostE == 0 || mostH == 0)
+            {
+                
+                return View("Index",articlelist);
+            }
+            else
+            {
+                
+                return View("TopPicks", list);
+            }
+
+        }
+        [AllowAnonymous]
+        public ActionResult CategoryIndex(string category)
+        {
+            return View("Index", _context.Articles.Where(x => x.Category ==category));
+        }
 
         private bool ArticleExists(int id)
         {

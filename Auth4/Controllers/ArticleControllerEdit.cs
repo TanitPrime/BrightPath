@@ -1,6 +1,7 @@
 ﻿using BrightPathDev.Models;
 using BrightPathDev.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,7 +37,7 @@ namespace BrightPathDev.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth)
+        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleTitle,desc_mini,desc,ArticleAdress,Articlecoor,ArticleContact,ImagePath,ImageName,AuthorId,AuthorName,FlagCount,Status")] Article article, ViewModelBoth viewModelBoth,IFormCollection formFields)
         {
             
             if (id != article.ArticleId)
@@ -63,7 +64,19 @@ namespace BrightPathDev.Controllers
                     articleFromDb.ArticleLat = article.ArticleLat ;
                     articleFromDb.ArticleLng = article.ArticleLng ;
                     articleFromDb.Status = ContactStatus.Approved;
-
+                    var w = formFields["Category"];
+                    switch (w)
+                    {
+                        case "1":
+                            article.Category = "Business";
+                            break;
+                        case "2":
+                            article.Category = "Entertainment";
+                            break;
+                        case "3":
+                            article.Category = "Health";
+                            break;
+                    }
 
                     var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Image", authorId, articleFromDb.ArticleId.ToString());
 

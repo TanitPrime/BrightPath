@@ -88,7 +88,11 @@ namespace BrightPathDev.Controllers
             var url = "/Article/Details/" + id;
             if (likeModel != null)
             {
-                article.LikeCount -= 1;
+                if (article.LikeCount >0)
+                {
+                    article.LikeCount -= 1;
+                }
+                
                 
                 _context.Remove(likeModel);
                 _context.Update(article);
@@ -115,7 +119,11 @@ namespace BrightPathDev.Controllers
             var url = "/Article/Details/" + id;
             if (dislikeModel != null)
             {
-                article.DislikeCount -= 1;
+                if (article.DislikeCount > 0)
+                {
+                    article.DislikeCount -= 1;
+                }
+                
 
                 _context.Remove(dislikeModel);
                 _context.Update(article);

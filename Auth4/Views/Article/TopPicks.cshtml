@@ -5,7 +5,7 @@
 }
 
 
-<h1>Browse</h1>
+<h1> Top Picks</h1>
 <hr width="80%" />
 
 <hr />
@@ -90,6 +90,8 @@
     <div class"article-wrap style="margin-right:150px;border:1px solid;">
         @foreach (var item in Model)
         {
+            <h1>Top in @item.Category</h1>
+            <hr />
             @if (item.Status == ContactStatus.Approved)
             {
                 <a asp-action="Details" asp-route-id="@item.ArticleId" style="text-decoration:none;color:inherit;">

@@ -59,8 +59,10 @@ namespace BrightPathDev.Models
         public int DislikeCount { get; set; }
 
         public ContactStatus Status { get; set; }
+        public string Category { get; set; }
     }
 
+    
     public enum ContactStatus
     {
         Pending,
