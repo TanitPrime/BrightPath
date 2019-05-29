@@ -24,24 +24,25 @@
     <tbody>
         @foreach(var item in Model.FGs){
 
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlaggerName)
-            </td>       
+         <tr>
+              <td>
+                      @Html.DisplayFor(modelItem => item.FlaggerName)
+             </td>       
 
-            @if(item.CommentId!=null)
-            {
-                 <td>
-                     @Html.DisplayFor(modelItem => item.CommentText)<a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">Check Article</a>
-                </td>
-            }else if(item.ArticleId!=null)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.ArticleId) <a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">Check Article</a>
-               </td>
-            }
+              @if(item.CommentId!=null)
+              {
+
+                   <td>
+                          @Html.DisplayFor(modelItem => item.CommentText)<a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">Check Article</a>
+                   </td>
+             }else if(item.ArticleId!=null)
+               {
+                    <td>
+                         @Html.DisplayFor(modelItem => item.ArticleId) <a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">Check Article</a>
+                   </td>
+             }
            
-        </tr>
+         </tr>
 
        }
     </tbody>
