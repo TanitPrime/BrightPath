@@ -4,7 +4,7 @@
 
 basically a yelp.
 
-its a business discovery review form.
+its a business discovery croud-sourced review form.
 
 make an account and you can create and edit articles.
 browse articles by category and checkout their placement powered by google maps.
