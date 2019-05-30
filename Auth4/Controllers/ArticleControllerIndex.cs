@@ -90,14 +90,17 @@ namespace BrightPathDev.Controllers
             }
 
 
-            if (list.Count >0)
+            if (mostB==0 || mostE == 0 || mostH == 0)
             {
-                return View("TopPicks", list);
+                
+                return View("Index",articlelist);
             }
             else
             {
-                return View("Index", articlelist);
+                
+                return View("TopPicks", list);
             }
+
         }
         [AllowAnonymous]
         public ActionResult CategoryIndex(string category)

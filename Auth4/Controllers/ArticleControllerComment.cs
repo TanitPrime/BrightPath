@@ -54,8 +54,6 @@ namespace BrightPathDev.Controllers
                 {
                     if(item.CommentId == commenter)
                     {
-                        var flag = await _context.Flags.FirstOrDefaultAsync(k => k.CommentId == commenter);
-                        _context.Remove(flag);
                         _context.Remove(comment);
                     }
                 }
