@@ -1,4 +1,4 @@
-﻿using BrightPathDev.Data;
+using BrightPathDev.Data;
 using BrightPathDev.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -90,7 +90,7 @@ namespace BrightPathDev.Controllers
             }
 
 
-            if (list.Count >0)
+            if (list.Count > 0)
             {
                 return View("TopPicks", list);
             }
@@ -98,6 +98,8 @@ namespace BrightPathDev.Controllers
             {
                 return View("Index", articlelist);
             }
+
+
         }
         [AllowAnonymous]
         public ActionResult CategoryIndex(string category)

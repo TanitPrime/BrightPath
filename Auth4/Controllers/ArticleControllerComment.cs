@@ -1,4 +1,4 @@
-﻿using BrightPathDev.Models;
+using BrightPathDev.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +54,7 @@ namespace BrightPathDev.Controllers
                 {
                     if(item.CommentId == commenter)
                     {
-			var flag = await _context.Flags.FindAsync(item.CommentId);
+                        var flag = await _context.Flags.FindAsync(item.CommentId);
                         _context.Remove(flag);
                         _context.Remove(comment);
                     }
