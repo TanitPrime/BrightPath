@@ -162,7 +162,7 @@
                 <a asp-action="Edit" asp-route-id="@Model.Article.ArticleId">Edit</a> <br />
                 <a asp-action="Delete" asp-route-id="@Model.Article.ArticleId">Delete</a> <br />
             }
-         <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="FlagArticle" asp-route-AId="@Model.Article.ArticleId">Report</button>
+         <button type="submit" style="color:red; padding:0;" class="btn btn-link" asp-controller="Article" asp-action="FlagArticle" asp-route-AId="@Model.Article.ArticleId">Report</button>
          <span>x @Model.Article.FlagCount</span>
         </div>
         <!--Comment Section-->
