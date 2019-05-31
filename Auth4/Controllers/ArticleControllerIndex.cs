@@ -90,16 +90,15 @@ namespace BrightPathDev.Controllers
             }
 
 
-            if (mostB==0 || mostE == 0 || mostH == 0)
+            if (list.Count > 0)
             {
-                
-                return View("Index",articlelist);
+                return View("TopPicks", list);
             }
             else
             {
-                
-                return View("TopPicks", list);
+                return View("Index", articlelist);
             }
+
 
         }
         [AllowAnonymous]
