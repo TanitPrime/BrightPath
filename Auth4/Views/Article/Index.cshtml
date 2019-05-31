@@ -2,47 +2,33 @@
 
 @{
     ViewData["Title"] = "Index";
-}
 
-
-<h1>Browse</h1>
-<hr width="80%" />
-
-<hr />
-<div class="side-container">
-    <div class="Create align-content-lg-end">
-        <a asp-action="Create" class="create-button">Create New</a>
-    </div>
-
-
-</div>
-
-<br />
-
-<div class="row">
-    @foreach (var item in Model)
-    {
-        @if (item.Status == ContactStatus.Approved)
+    <h1 class="wrapper-title">Browse</h1>
+    <div class="row">
+        <br />
+        @foreach (var item in Model)
         {
-            <div class="card col-4">
-                @if (item.ImagePath != null)
-                { 
-                <img class="card-img-top" src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" alt="Article image">
-                 }
+            @if (item.Status == ContactStatus.Approved)
+            {
+                <div class="card col-4">
+                    @if (item.ImagePath != null)
+                    {
+                        <img class="card-img-top" src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" alt="Article image">
+                    }
 
-            <div class="card-body">
-                <a asp-action="Details" asp-route-id="@item.ArticleId">
-                    <h5 class="card-title">
-                        @Html.DisplayFor(modelItem => item.ArticleTitle)
-                    </h5>
-                </a>
-                <p class="card-text">
-                    @Html.DisplayFor(modelItem => item.desc_mini)
-                </p>
-                <div>@item.LikeCount Likes ! |@item.DislikeCount Dislikes !</div>
-                <a asp-action="Details" asp-route-id="@item.ArticleId" class="btn btn-primary">View Article</a>
-            </div>
-            </div>
+                    <div class="card-body">
+                        <a asp-action="Details" asp-route-id="@item.ArticleId">
+                            <h5 class="card-title">
+                                @Html.DisplayFor(modelItem => item.ArticleTitle)
+                            </h5>
+                        </a>
+                        <p class="card-text">
+                            @Html.DisplayFor(modelItem => item.desc_mini)
+                        </p>
+                        <div>@item.LikeCount Likes ! |@item.DislikeCount Dislikes !</div>
+                        <a asp-action="Details" asp-route-id="@item.ArticleId" class="btn btn-primary">View Article</a>
+                    </div>
+                </div>
+            }
         }
-    }
-</div>
+    </div>
