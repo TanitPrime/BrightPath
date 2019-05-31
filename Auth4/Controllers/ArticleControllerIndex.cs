@@ -1,4 +1,4 @@
-﻿using BrightPathDev.Data;
+using BrightPathDev.Data;
 using BrightPathDev.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
