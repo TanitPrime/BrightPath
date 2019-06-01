@@ -38,7 +38,7 @@
     <br />
     <br />
     <div class="container">
-        <ul class="nav categories-nav">
+        <ul class="nav categories-nav mt-4">
             <li class="nav-item">
                 <a class="nav-link" asp-controller="Article" asp-action="CategoryIndex" asp-route-category="Business">Business</a>
             </li>
@@ -50,11 +50,7 @@
             </li>
         </ul>
         <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3 content">
-            <br />
-            <br />
-
-            <br />
+        <main role="main" class="pb-5 mt-4 content">
             @RenderBody()
         </main>
     </div>
