@@ -11,23 +11,25 @@
         {
             @if (item.Status == ContactStatus.Approved)
             {
-                <div class="card col-4">
-                    @if (item.ImagePath != null)
-                    {
-                        <img class="card-img-top" src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" alt="Article image">
-                    }
+                <div class="col-4">
+                    <div class="card">
+                        @if (item.ImagePath != null)
+                        {
+                            <img class="card-img-top" src="~/Image/@item.AuthorId/@item.ArticleId/@Url.Content(item.ImageName)" alt="Article image">
+                        }
 
-                    <div class="card-body">
-                        <a asp-action="Details" asp-route-id="@item.ArticleId">
-                            <h5 class="card-title">
-                                @Html.DisplayFor(modelItem => item.ArticleTitle)
-                            </h5>
-                        </a>
-                        <p class="card-text">
-                            @Html.DisplayFor(modelItem => item.desc_mini)
-                        </p>
-                        <div>@item.LikeCount Likes ! |@item.DislikeCount Dislikes !</div>
-                        <a asp-action="Details" asp-route-id="@item.ArticleId" class="btn btn-primary">View Article</a>
+                        <div class="card-body">
+                            <a asp-action="Details" asp-route-id="@item.ArticleId">
+                                <h5 class="card-title">
+                                    @Html.DisplayFor(modelItem => item.ArticleTitle)
+                                </h5>
+                            </a>
+                            <p class="card-text mb-2">
+                                @Html.DisplayFor(modelItem => item.desc_mini)
+                            </p>
+                            <div class="text-muted mb-3">@item.LikeCount Likes - @item.DislikeCount Dislikes</div>
+                            <a asp-action="Details" asp-route-id="@item.ArticleId" class="btn btn-primary">View Article</a>
+                        </div>
                     </div>
                 </div>
             }
