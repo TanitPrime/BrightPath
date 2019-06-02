@@ -32,6 +32,7 @@ header {
     position: relative;
     height: 430px;
     width: 100%;
+    background: url(/Image/hero.png) 50% 0 no-repeat fixed;
 }
 
 .hero .wrapper {
