@@ -34,7 +34,6 @@ header {
     width: 100%;
     background-position: 50% 0;
     background-attachment: fixed;
-    background:  50% 0 no-repeat fixed;
     background-image: url(/Image/hero.png);
 }
 
