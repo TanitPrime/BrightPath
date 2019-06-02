@@ -32,7 +32,9 @@ header {
     position: relative;
     height: 430px;
     width: 100%;
-    background: url(/Image/hero.png) 50% 0 no-repeat fixed;
+    background-position: 50% 0;
+    background-attachment: fixed;
+    background-image: url(/Image/hero.png);
 }
 
 .hero .wrapper {
@@ -59,6 +61,14 @@ header {
 
 .hero .hero-description {
     color: #f3f3f3;
+}
+
+@media (min-width: 320px) and (max-width: 390px) {
+  
+  .hero .wrapper {
+    padding: 0 35px;
+  }
+  
 }
 
 /*side bar styling*/
