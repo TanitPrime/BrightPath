@@ -1,12 +1,13 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+.navbar .navbar-brand {
+  font-weight: 500;
 }
 
+.navbar .form-inline .form-control {
+  height: 36px;
+}
 
 /*header styling*/
 header {
@@ -25,6 +26,40 @@ header {
         font-size: 20px;
 }
 
+.hero {
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 430px;
+    width: 100%;
+    background: url(/Image/hero.png) 50% 0 no-repeat fixed;
+}
+
+.hero .wrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 65px;
+}
+
+.hero:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.hero .hero-title {
+    color: #fff;
+    font-size: 44px;
+}
+
+.hero .hero-description {
+    color: #f3f3f3;
+}
 
 /*side bar styling*/
 .side-container {

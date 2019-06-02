@@ -24,9 +24,7 @@
             @Html.DisplayNameFor(model => model.Article.desc)
         </dt>
         <dd class="col-sm-10">
-            <p style="width:80%;word-wrap: break-word;">
-                @Html.DisplayFor(model => model.Article.desc)
-            </p>
+            @Html.DisplayFor(model => model.Article.desc)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Article.ArticleAdress)
@@ -66,8 +64,10 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Article.AuthorId)
         </dd>*@
-
-        <dd class="col-sm-6">
+        <dt class="col-sm-12 mb-2">
+            Map:
+        </dt>
+        <dd class="col-sm-6 mb-3">
             <div id="google-maps" style="height:400px;"></div>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA90TINkNOQX2-7jXdPEVrzi1-FjpKh8kA"></script>
@@ -103,105 +103,97 @@
             </dd>*@
             <dd class="col-sm-10">
 
-                <img src="~/Image/@Model.Article.AuthorId/@Model.Article.ArticleId/@Url.Content(Model.Article.ImageName)" class="img-fluid" />
+                <img width="500px" src="~/Image/@Model.Article.AuthorId/@Model.Article.ArticleId/@Url.Content(Model.Article.ImageName)" class="img-fluid" />
             </dd>
         }
 
     </dl>
     <!--Checking if the current logged in user have liked the post before-->
     <form method="post" role="form">
-        @{ bool x = false;
-            foreach (var like in Model.LikeModels)
-            {
-                if (User.Identity.Name == like.UserName)
+        <div class="vote-block mb-2">
+            @{ bool x = false;
+                foreach (var like in Model.LikeModels)
                 {
+                    if (User.Identity.Name == like.UserName)
+                    {
 
-                    x = true;
+                        x = true;
+                    }
+                }
+                if (x)
+                {
+                    <button type="submit" class="btn btn-outline-primary" asp-controller="Article" asp-action="UnLike" asp-route-id="@Model.Article.ArticleId">Like</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
                 }
             }
-            if (x)
-            {
-                <button type="submit" class="btn btn-outline-primary" asp-controller="Article" asp-action="UnLike" asp-route-id="@Model.Article.ArticleId">Like</button>
-            }
-            else
-            {
-                <button type="submit" class="btn btn-primary" asp-controller="Article" asp-action="Like" asp-route-id="@Model.Article.ArticleId">Like</button>
-            }
-        }
-        @{ bool y = false;
-            foreach (var dislike in Model.DislikeModels)
-            {
-                if (User.Identity.Name == dislike.UserName)
+            @{ bool y = false;
+                foreach (var dislike in Model.DislikeModels)
                 {
+                    if (User.Identity.Name == dislike.UserName)
+                    {
 
-                    y = true;
+                        y = true;
+                    }
+                }
+                if (y)
+                {
+                    <button type="submit" class="btn btn-outline-danger" asp-controller="Article" asp-action="UnDislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-danger" asp-controller="Article" asp-action="Dislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
                 }
             }
-            if (y)
-            {
-                <button type="submit" class="btn btn-outline-danger" asp-controller="Article" asp-action="UnDislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
-            }
-            else
-            {
-                <button type="submit" class="btn btn-danger" asp-controller="Article" asp-action="Dislike" asp-route-id="@Model.Article.ArticleId">Dislike</button>
-            }
-        }
-        <br />
+        </div>
         <!--Displaying the amount of likes/dislikes-->
-        <span>@Html.DisplayFor(model => model.Article.LikeCount) Likes!</span>| <span>@Html.DisplayFor(model => model.Article.DislikeCount) Dislikes!</span>
-        <br />
+        <div class="text-muted mb-1">@Html.DisplayFor(model => model.Article.LikeCount) Likes - @Html.DisplayFor(model => model.Article.DislikeCount) Dislikes</div>
 
         @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Article.AuthorName)
         {
             <a asp-controller="Review" asp-action="ReviewRequest" asp-route-id="@Model.Article.ArticleId">Request Delete</a><br />
             <a asp-controller="Review" asp-action="EditRequest" asp-route-id="@Model.Article.ArticleId">Request Edit</a>
         }
-        <div>
+        <div class="mb-4">
             @if (User.IsInRole("Root") || User.IsInRole("Admin"))
             {
                 <a asp-action="Edit" asp-route-id="@Model.Article.ArticleId">Edit</a> <br />
                 <a asp-action="Delete" asp-route-id="@Model.Article.ArticleId">Delete</a> <br />
             }
-         <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="FlagArticle" asp-route-AId="@Model.Article.ArticleId">Report</button>
+         <button type="submit" style="color:red; padding:0;" class="btn btn-link" asp-controller="Article" asp-action="FlagArticle" asp-route-AId="@Model.Article.ArticleId">Report</button>
          <span>x @Model.Article.FlagCount</span>
         </div>
         <!--Comment Section-->
-        <div>
+        <div class="article-comments">
             <h4>Comments</h4>
             <hr />
-            <dl class="row">
+            <div class="comments-list">
                 @foreach (var item in Model.Comments)
                 {
-                    @if (item.ArticleId == Model.Article.ArticleId) { 
-                    <dt class="col-sm-2">
-                        @item.UserName
-                    </dt>
-                    <dd class="col-sm-10">
-                        @item.CommentText
-
-
-                        @if (User.IsInRole("Root") || User.IsInRole("Admin") || User.Identity.Name == item.UserName)
-                        {
-                            <button class="btn btn-link" type="submit" asp-controller="Article" asp-action="DeleteComment" asp-route-commenter="@item.CommentId" asp-route-id="@Model.Article.ArticleId">Delete</button>
-                        }
-                        <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="FlagComment" asp-route-CId="@item.CommentId" asp-route-AId="@Model.Article.ArticleId">Report</button>
-                        <span>x @item.FlagCount</span>
-                        <hr />
-                    </dd>
+                    @if (item.ArticleId == Model.Article.ArticleId)
+                    {
+                        <div class="media single-comment mb-3">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">@item.UserName</h5>
+                                <span class="text-muted">@item.CommentText</span>
+                            </div>
+                            @if (User.IsInRole("Root") || User.IsInRole("Admin") || User.Identity.Name == item.UserName)
+                            {
+                                <button class="btn btn-link" type="submit" asp-controller="Article" asp-action="DeleteComment" asp-route-commenter="@item.CommentId" asp-route-id="@Model.Article.ArticleId">Delete</button>
+                            }
+                            <button type="submit" style="color:red;" class="btn btn-link" asp-controller="Article" asp-action="FlagComment" asp-route-CId="@item.CommentId" asp-route-AId="@Model.Article.ArticleId">Report</button>
+                            <span>x @item.FlagCount</span>
+                        </div>
                     }
                 }
-            </dl>
-            <dl>
-                <dt>
-                    <label class="control-label">Add Your Own Comment !</label> 
-                </dt>
-                <dd>
-                    <textarea style="width:400px;min-height:75px;" type="text" name="CommentText"></textarea>
-                </dd>
-            </dl>
-            <button class="btn btn-primary" type="submit" asp-controller="Article" asp-action="Comment" asp-route-id="@Model.Article.ArticleId">Comment</button>
-
-
+            </div>
+            <div class="form-group post-comment">
+                <label for="comment-input">Post comment</label>
+                <textarea class="form-control mb-3" id="comment-input" rows="3" type="text" name="CommentText"></textarea>
+                <button class="btn btn-primary" type="submit" asp-controller="Article" asp-action="Comment" asp-route-id="@Model.Article.ArticleId">Comment</button>
+            </div>
         </div>
     </form>
     <a asp-action="Index">Back to List</a>
