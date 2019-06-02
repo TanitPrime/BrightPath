@@ -63,6 +63,14 @@ header {
     color: #f3f3f3;
 }
 
+@media (min-width: 320px) and (max-width: 390px) {
+  
+  .hero .wrapper {
+    padding: 0 35px;
+  }
+  
+}
+
 /*side bar styling*/
 .side-container {
     z-index: 5000;
