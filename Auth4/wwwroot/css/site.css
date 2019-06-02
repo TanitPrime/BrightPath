@@ -26,6 +26,39 @@ header {
         font-size: 20px;
 }
 
+.hero {
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 430px;
+    width: 100%;
+}
+
+.hero .wrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 65px;
+}
+
+.hero:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(#000, .80);
+}
+
+.hero .hero-title {
+    color: #fff;
+    font-size: 44px;
+}
+
+.hero .hero-description {
+    color: #f3f3f3;
+}
 
 /*side bar styling*/
 .side-container {
