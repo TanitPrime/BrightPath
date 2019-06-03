@@ -59,6 +59,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
                 {
                     MyPosts X = new MyPosts
                     {
+                        ArticleId = u.ArticleId,
                         Title = u.ArticleTitle,
                         UserName = u.AuthorName,
                         DateOfRequest = DateTime.Now.ToString().ToString(),

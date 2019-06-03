@@ -54,6 +54,16 @@ namespace BrightPathDev.Controllers
                 }
                 
             }
+            var flag = await _context.Flags.FindAsync(article.ArticleId);
+            _context.Remove(flag);
+            
+            foreach (var item in _context.Comments.ToList())
+            {
+                if(item.ArticleId == article.ArticleId)
+                {
+                    _context.Remove(item);
+                }
+            }
             _context.Articles.Remove(article);
             
             

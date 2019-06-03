@@ -52,6 +52,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
         public async Task OnGetAsync()
         {
             var flags = _context.Flags.ToList();
+            FGs.Clear();
             foreach (var u in flags)
             {
                 FG X = new FG
@@ -63,6 +64,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
                 };
                 FGs.Add(X);
             }
+            
 
 
 
