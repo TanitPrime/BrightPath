@@ -4,62 +4,64 @@
     ViewData["Title"] = "Edit Request";
 }
 
-<h1>Edit Article</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Post" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ViewModelBoth.Article.ArticleId" />
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Article.ArticleTitle" class="control-label"></label>
-                <input placeholder="Enter Title" asp-for="ViewModelBoth.Article.ArticleTitle" class="form-control" />
-                <span asp-validation-for="ViewModelBoth.Article.ArticleTitle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Article.desc_mini" class="control-label"></label>
-                <input placeholder="Enter Short Description" asp-for="ViewModelBoth.Article.desc_mini" class="form-control" />
-                <span asp-validation-for="ViewModelBoth.Article.desc_mini" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Article.desc" class="control-label"></label>
-                <textarea placeholder="Enter Full Description" type="text" asp-for="ViewModelBoth.Article.desc" rows="3" class="form-control"></textarea>
-                <span asp-validation-for="ViewModelBoth.Article.desc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Article.ArticleAdress" class="control-label"></label>
-                <input placeholder="Enter Map Address" asp-for="ViewModelBoth.Article.ArticleAdress" class="form-control" />
-                <span asp-validation-for="ViewModelBoth.Article.ArticleAdress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Article.ArticleLat" class="control-label"></label>
-                <input placeholder="Enter Map Latitude" asp-for="ViewModelBoth.Article.ArticleLat" class="form-control" />
-                <span asp-validation-for="ViewModelBoth.Article.ArticleLat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Article.ArticleLng" class="control-label"></label>
-                <input placeholder="Enter Map Langitiude" asp-for="ViewModelBoth.Article.ArticleLng" class="form-control" />
-                <span asp-validation-for="ViewModelBoth.Article.ArticleLng" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Article.ArticleContact" class="control-label"></label>
-                <input placeholder="Enter Contact" asp-for="ViewModelBoth.Article.ArticleContact" class="form-control" />
-                <span asp-validation-for="ViewModelBoth.Article.ArticleContact" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModelBoth.Files">The image file</label>
-                <input asp-for="ViewModelBoth.Files" type="file" accept=".jpg,.jpeg,.png" class="form-control-file" required />
-            </div>
-            <div class="form-group">
+<div class="container">
+    <h1>Edit Article</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Post" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ViewModelBoth.Article.ArticleId" />
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Article.ArticleTitle" class="control-label"></label>
+                    <input placeholder="Enter Title" asp-for="ViewModelBoth.Article.ArticleTitle" class="form-control" />
+                    <span asp-validation-for="ViewModelBoth.Article.ArticleTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Article.desc_mini" class="control-label"></label>
+                    <input placeholder="Enter Short Description" asp-for="ViewModelBoth.Article.desc_mini" class="form-control" />
+                    <span asp-validation-for="ViewModelBoth.Article.desc_mini" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Article.desc" class="control-label"></label>
+                    <textarea placeholder="Enter Full Description" type="text" asp-for="ViewModelBoth.Article.desc" rows="3" class="form-control"></textarea>
+                    <span asp-validation-for="ViewModelBoth.Article.desc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Article.ArticleAdress" class="control-label"></label>
+                    <input placeholder="Enter Map Address" asp-for="ViewModelBoth.Article.ArticleAdress" class="form-control" />
+                    <span asp-validation-for="ViewModelBoth.Article.ArticleAdress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Article.ArticleLat" class="control-label"></label>
+                    <input placeholder="Enter Map Latitude" asp-for="ViewModelBoth.Article.ArticleLat" class="form-control" />
+                    <span asp-validation-for="ViewModelBoth.Article.ArticleLat" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Article.ArticleLng" class="control-label"></label>
+                    <input placeholder="Enter Map Langitiude" asp-for="ViewModelBoth.Article.ArticleLng" class="form-control" />
+                    <span asp-validation-for="ViewModelBoth.Article.ArticleLng" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Article.ArticleContact" class="control-label"></label>
+                    <input placeholder="Enter Contact" asp-for="ViewModelBoth.Article.ArticleContact" class="form-control" />
+                    <span asp-validation-for="ViewModelBoth.Article.ArticleContact" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViewModelBoth.Files">The image file</label>
+                    <input asp-for="ViewModelBoth.Files" type="file" accept=".jpg,.jpeg,.png" class="form-control-file" required />
+                </div>
+                <div class="form-group">
 
-                <button class="btn btn-primary" type="submit" asp-controller="Review" asp-action="CreateEdited" asp-route-id="@Model.ViewModelBoth.Article.ArticleId">Submit Edit Request</button>
-            </div>
-        </form>
+                    <button class="btn btn-primary" type="submit" asp-controller="Review" asp-action="CreateEdited" asp-route-id="@Model.ViewModelBoth.Article.ArticleId">Submit Edit Request</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {
