@@ -26,6 +26,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account.Manage
         public static string ManageEditRequest => "ManageEditRequest";
 
         public static string ManageFlags => "ManageFlags";
+        public static string MyArticles => "MyArticles";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -48,6 +49,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account.Manage
         public static string ManageEditRequestNavClass(ViewContext viewContext) => PageNavClass(viewContext, ManageEditRequest);
 
         public static string ManageFlagsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ManageFlags);
+        public static string MyArticlesNavClass(ViewContext viewContext) => PageNavClass(viewContext, MyArticles);
         
 
         private static string PageNavClass(ViewContext viewContext, string page)

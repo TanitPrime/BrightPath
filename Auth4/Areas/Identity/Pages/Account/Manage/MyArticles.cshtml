@@ -1,0 +1,49 @@
+﻿@page
+@model MyArticles
+@{
+    ViewData["Title"] = "My Articles";
+    ViewData["ActivePage"] = ManageNavPages.MyArticles;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<div class"article-wrap style="margin-right:150px;">
+    @foreach (var item in Model.rqs)
+    {
+
+        
+    <div class="article" style="border-left:20px solid ;margin-top:20px;">
+
+        <div class="title col-10 bg-light" style="padding:1em;text-align:center;border-radius:5px;">
+            @Html.DisplayFor(modelItem => item.Title)
+        </div>
+        <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+            @Html.DisplayFor(modelItem => item.UserName)
+        </div>
+        <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+            @Html.DisplayFor(modelItem => item.DateOfRequest)
+        </div>
+
+        <div class="short_disc col-lg-10" style="padding:1em;text-align:center;">
+
+            @Html.DisplayFor(modelItem => item.Status)
+        </div>
+
+    </div>
+            <a class="btn btn-primary" style="color:aliceblue;" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">View Details</a>
+
+            
+        
+    }
+</div>
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
