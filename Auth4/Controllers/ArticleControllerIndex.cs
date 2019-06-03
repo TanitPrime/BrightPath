@@ -2,6 +2,7 @@ using BrightPathDev.Data;
 using BrightPathDev.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,9 +31,10 @@ namespace BrightPathDev.Controllers
 
         // GET: Article search
         [AllowAnonymous]
-        public ActionResult Search(string searching)
+        public ActionResult Search(IFormCollection formCollection)
         {
-            return View("Index", _context.Articles.Where(x => x.ArticleTitle.Contains(searching) || searching == null).ToList());
+            var x = formCollection["Search"];
+            return View("Index", _context.Articles.Where(k => k.ArticleTitle.Contains(x) || x == "").ToList());
         }
         // GET: Article
         [AllowAnonymous]
