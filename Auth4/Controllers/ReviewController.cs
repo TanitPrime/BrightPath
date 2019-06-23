@@ -92,7 +92,7 @@ namespace Auth4.Controllers
             }
             else
             {
-                return LocalRedirect("/RequestDenied");
+                return View("../Article/RequestDenied");
             }
         }
 

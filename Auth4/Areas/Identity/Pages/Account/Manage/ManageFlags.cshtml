@@ -3,11 +3,14 @@
 @{
     ViewData["Title"] = "Manage Flags";
     ViewData["ActivePage"] = ManageNavPages.ManageFlags;
+    
+    
 }
 
 <h1>@ViewData["Title"]</h1>
-
-
+<form method="post" class="form-horizontal" role="form" asp-controller="Article" asp-action="RemoveFlag" asp-route-fgs="@Model.FGs">
+    <button type="submit" class="btn btn-primary" style="color:aliceblue;">clean faulty flags</button>
+</form>
 <table class="table">
     
     <thead>
@@ -46,6 +49,7 @@
                 </td>
                 <td>
                     <a class="btn btn-primary" asp-controller="Article" asp-action="Details" asp-route-id="@item.ArticleId">Check Article</a>
+                    
                 </td>
             }
 

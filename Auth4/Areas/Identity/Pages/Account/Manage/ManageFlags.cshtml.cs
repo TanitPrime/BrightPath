@@ -26,6 +26,7 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
         public int? CommentId { get; set; }
         public string CommentText { get; set; }
 
+        public int FlagId { get; set; }
 
     }
     [Authorize(Roles ="Root,Admin")]
@@ -60,7 +61,8 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
                     FlaggerName = u.FlaggerName,
                     ArticleId = u.ArticleId,
                     CommentId = u.CommentId,
-                    CommentText = u.CommentText
+                    CommentText = u.CommentText,
+                    FlagId = u.FlagId
                 };
                 FGs.Add(X);
             }
@@ -69,8 +71,29 @@ namespace BrightPathDev.Areas.Identity.Pages.Account
 
 
         }
+        
+        public IActionResult OnPostRemoveFlag()
+        {
+            //declaring
+
+            var flagsfromdb = _context.Flags.ToList();
 
 
+            foreach (var item in flagsfromdb)
+            {
+
+                if (item.CommentId == null && item.ArticleId== null)
+                {
+                    _context.Remove(item);
+                }
+            }
+
+             _context.SaveChangesAsync();
+            //return LocalRedirect("Identity/Account/Manage/ManageFlags");
+
+
+            return Page();
+        }
 
 
     }

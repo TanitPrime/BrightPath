@@ -1,4 +1,5 @@
-﻿using BrightPathDev.Models;
+﻿using BrightPathDev.Areas.Identity.Pages.Account;
+using BrightPathDev.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -93,6 +94,34 @@ namespace BrightPathDev.Controllers
 
         }
 
+
+
+        //deleting a flag
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveFlag(IList<FG> fgs)
+        {
+            //declaring
+            
+            var flagsfromdb = _context.Flags.ToList();
+
+
+            foreach (var item in flagsfromdb)
+            {
+                
+                if (item.ArticleId == null )
+                {
+                    _context.Remove(item);
+                }
+            }
+            
+            await _context.SaveChangesAsync();
+            return LocalRedirect("Identity/Account/Manage/ManageFlags");
+
+
+
+
+        }
 
     }
 }
