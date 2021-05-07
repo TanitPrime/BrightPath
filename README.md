@@ -31,7 +31,7 @@ a bit messy i know
 
 ![image](https://user-images.githubusercontent.com/47365313/117477827-5f8c2380-af56-11eb-8d8d-d973ddb25e57.png)
 
-### Commenting/rating/reporting system
+### Commenting/rating with full moderation system (approving new articles and changing them, moderating comment sections manually, etc...)
 
 ![image](https://user-images.githubusercontent.com/47365313/117477963-834f6980-af56-11eb-93b7-a8bdc675362a.png)
 
