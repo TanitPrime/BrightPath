@@ -1,23 +1,43 @@
-#my graduation project
+# my graduation project
+
+
+basically a yelp, since it is unavailable in my country.
+I didnt choose the name.
+
+its a business discovery croud-sourced review form. Using ASP .net and Bootsrap for styling.
+
+### Homepage 
+
+![image](https://user-images.githubusercontent.com/47365313/117477403-e096eb00-af55-11eb-801d-7ade0d371300.png)
+
+
+### Responsive
+
+![image](https://user-images.githubusercontent.com/47365313/117478200-c14c8d80-af56-11eb-9b19-b58db409561e.png)
+
+
+### Browsing
+
+![image](https://user-images.githubusercontent.com/47365313/117477587-15a33d80-af56-11eb-9034-6c1d1873f208.png)
+
+
+### Article details 
+
+a bit messy i know
+![image](https://user-images.githubusercontent.com/47365313/117477636-26ec4a00-af56-11eb-9e32-de646d605190.png)
+
+### Full auth system with password recovery 
+
+![image](https://user-images.githubusercontent.com/47365313/117477827-5f8c2380-af56-11eb-8d8d-d973ddb25e57.png)
+
+### Commenting/rating/reporting system
+
+![image](https://user-images.githubusercontent.com/47365313/117477963-834f6980-af56-11eb-93b7-a8bdc675362a.png)
+
+### Control panel 
+
+![image](https://user-images.githubusercontent.com/47365313/117478156-b265db00-af56-11eb-9434-dfabd94daf8f.png)
 
 
 
-basically a yelp.
 
-its a business discovery croud-sourced review form.
-
-make an account and you can create and edit articles.
-browse articles by category and checkout their placement powered by google maps.
-comment on them.
-like and dislike them.
-and report them in case of malicious content.
-
-"root" and "admin" are superuser and webmaster roles respectively
-generated on build so they will always be there
-root/password
-admin/password
-
-root can create admins
-
-admins can manage and monitor articles
-such as reviewing reports and approving creation, edit and delete requests.
