@@ -25,7 +25,6 @@ its a business discovery croud-sourced review form. Using ASP .net and Bootsrap 
 
 ![image](https://user-images.githubusercontent.com/47365313/117477636-26ec4a00-af56-11eb-9e32-de646d605190.png)
 
-a bit messy i know
 
 ### Full auth system with password recovery 
 
